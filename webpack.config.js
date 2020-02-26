@@ -1,6 +1,10 @@
+const path = require('path');
+
 module.exports = {
-    mode: 'development',
-    entry: './src/index.ts',
+    entry: './lib/index.tsx',
+    output: {
+        path: path.resolve(__dirname, 'dist/lib'),
+    },
     module: {
         rules: [
             {
