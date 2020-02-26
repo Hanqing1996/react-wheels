@@ -4,6 +4,8 @@ module.exports = {
     entry: './lib/index.tsx',
     output: {
         path: path.resolve(__dirname, 'dist/lib'),
+        library: 'myReactWheel',
+        libraryTarget: "umd"
     },
     module: {
         rules: [
