@@ -1,3 +1,5 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
 const path = require('path');
 
 module.exports = {
@@ -15,5 +17,11 @@ module.exports = {
                 loader: 'awesome-typescript-loader'
             }
         ]
-    }
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            title: "react wheel",
+            template: "./lib/index.html"
+        })
+    ]
 };
