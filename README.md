@@ -74,3 +74,17 @@ yarn add -D @types/react
 > dev 环境下，需要 index.html（dist/lib 含 index.html）
 > prod 环境下，需要去除 bundle 对 react 等库的依赖
 注意 yarn start 用的是 webpack.config.dev.js
+
+* 配置 Node 相关环境变量
+1. 安装 cross-env
+```
+yarn add cross-env -D
+```
+2. 修改 package.json
+```
+  "scripts": {
+    "start": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.dev.js",
+    "build:dev": "cross-env NODE_ENV=development webpack --config webpack.config.dev.js",
+    "build:prod": "cross-env NODE_ENV=production webpack --config webpack.config.prod.js"
+  }
+```
