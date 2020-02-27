@@ -37,5 +37,35 @@ yarn add webpack-dev-server -D
 1. 在 lib 目录下创建 index.html
 2. 手动安装 HtmlWebpackPlugin
 3. 配置 webpack.config.js 的 plugin
-4. 运行 npx webpack-dev-server，请求 index.html（http://localhost:8081/index.html）,可以看到 index.html 页面
+4. 运行 npx webpack-dev-server，请求 index.html（http://localhost:8081/index.html,或直接 http://localhost:8081,webpack 会将 index.html 作为首页）,可以看到 index.html 页面
+5. 注意此时若改动 lib/index.tsx ,编译结果依然更新于内存而非 dist/lib 目录
 
+#### 至此，我们便建立了项目的首页
+
+* 在 tsx 中引入 react,react-DOM
+1. 安装 react,react-dom
+```
+yarn add -D react
+yarn add -D react-dom
+```
+2. 安装相应类型声明文件
+```
+yarn add -D @types/react-dom
+yarn add -D @types/react
+```
+
+* 在 index.tsx 中引入 button.tsx
+> 配置 webpack.config.js 的 resolve.extensions
+
+* 去除 bundle 中 react 相关依赖
+> 修改 webpack.config.js 的 externals
+1. bundle 指的是 dist/lib 目录下的 main.js 文件。
+2. 去除 react 相关依赖指的是运行 npx webpack 后 bundle 去除 react 相关依赖，而 npx webpack-dev-sever 时项目开发时的运行状态，main.js 必须包含 react 依赖。
+3. 之所以要去除依赖，是为了减小 bundle 的体积，不是为了减小 npx webpack-dev-sever 时的 main.js 体积
+4. [externals](https://webpack.docschina.org/configuration/externals/) 指明了 bundle 中应该去除哪些依赖，并通过一些配置，保证我们的 lib 可以在各种模块上下文(module context)中使用，例如 CommonJS, AMD, 全局变量和 ES2015 模块。 
+5. 比如我们在 externals 中对 root 配置了{root:'React'},那么引用了我们 lib 的项目就可以通过 script 引入 react
+```
+<script src="https://cdn.bootcss.com/react/16.12.0/cjs/react.production.min.js"></script>
+```
+6. 换而言之，externals 对某个依赖的具体模块引用配置，规定了其他人使用我们 lib 时对于该依赖的模块引用方式
+7. 注意,我们的 index.tsx 同样需要引用 react,所以 externals 的 react 配置中必须包含我们在 index.tsx 中引用 react 的模块引用方式，否则项目在开发过程中无法顺利运行
