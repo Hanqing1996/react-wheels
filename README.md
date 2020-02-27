@@ -69,3 +69,8 @@ yarn add -D @types/react
 ```
 6. 换而言之，externals 对某个依赖的具体模块引用配置，规定了其他人使用我们 lib 时对于该依赖的模块引用方式
 7. 注意,我们的 index.tsx 同样需要引用 react,所以 externals 的 react 配置中必须包含我们在 index.tsx 中引用 react 的模块引用方式，否则项目在开发过程中无法顺利运行
+
+* 配置 webpack.config.dev.js 和 webpack.config.prod.js
+> dev 环境下，需要 index.html（dist/lib 含 index.html）
+> prod 环境下，需要去除 bundle 对 react 等库的依赖
+注意 yarn start 用的是 webpack.config.dev.js
