@@ -99,3 +99,11 @@ import * as React from 'react'
 // from Path+fileName
 import Button from './button'
 ```
+
+```
+import React from 'react'
+```
+不奏效，那就写成  
+```
+import * as React from 'react'
+```

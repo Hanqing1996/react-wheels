@@ -39,7 +39,7 @@ output: {
 }
 ```
 
-* 让 webpack 支持 ts
+* 让 webpack 支持 ts（能把 ts 编译 js）
 1. 安装 typescript
 2. 配置 tsconfig.json（直接抄，不要自己配）
 
@@ -128,4 +128,26 @@ yarn add cross-env -D
 ```
 
 * 配置 Jest（react 官配）
+> Jest 不会读取 webpack 配置
+1. 安装对应依赖
+```
+yarn add -D jest babel-jest @babel/preset-env @babel/preset-react react-test-renderer
+```
+jest 不支持 ts,所以还要安装 ts-jest, 及类型声明文件 @types/jest,@types/react-test-renderer
+```
+yarn add -D ts-jest
+yarn add -D @types/jest
+yarn add -D @types/react-test-renderer
+```
+2. 配置 .babelrc
+3. 配置 jest.config
+> jest.config.js 不会读取 webpack（karma.config.js 会）
+4. 创建 test/setupTests.js
+5. 配置 tsconfig.test.json
+6. 在 package.json 中添加 test 命令
+```
+  "scripts": {
+    "test": "cross-env NODE_ENV=test jest --config=jest.config.js --runInBand",
+    }
+```
 
