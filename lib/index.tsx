@@ -1,32 +1,22 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+import {useState} from "react";
 
 interface IProps {
-    Message:String
+    Message?:String
 }
 
 interface IState {
     n:Number
 }
 
-class App extends React.Component<IProps, IState>{
-    static defaultProps={
-        Message:'ji'
-    }
-    constructor(props:IProps) {
-        super(props);
-        this.state={
-            n:1
-        }
-    }
-    render(){
+const App:React.FunctionComponent<IProps>=(props:IProps)=>{
+    const [n:Number,setN:Function]=useState(1)
         return(
             <div>
-                {this.props.Message}
-                {this.state.n}
+                {props.Message}
             </div>
         )
-    }
 }
 
-ReactDOM.render(<App/>,document.getElementById('root'))
+ReactDOM.render(<App Message={'hi'}/>,document.getElementById('root'))

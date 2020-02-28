@@ -179,3 +179,6 @@ static defaultProps={
     Message:'ji'
 }
 ```
+
+> Hooks API 只能用在 react 16.8.0 以上 
+
