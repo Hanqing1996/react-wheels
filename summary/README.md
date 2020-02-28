@@ -107,3 +107,75 @@ import React from 'react'
 ```
 import * as React from 'react'
 ```
+
+#### 在 react 中，如何绑定 this
+> 我们需要使用箭头函数绑定 this
+```
+class App extends React.Component<IProps, IState>{
+    constructor(props:IProps) {
+        super(props);
+        this.state={
+            n:1
+        }
+    }
+    x=()=>{
+        this.setState({
+            n:this.state.n+1
+        })
+    }
+    render(){
+        return(
+            <div>
+                {this.state.n}
+                <button onClick={this.x}>
+            </div>
+        )
+    }
+}
+```
+这么做的原理是
+```
+x=()=>{
+    this.setState({
+        n:this.state.n+1
+    })
+}
+```
+等价于
+```
+this=App
+this.x=()=>{
+    this.setState({
+        n:this.state.n+1
+    })
+}
+```
+所以 this 作为箭头函数内部的一个普通变量，就是 App
+
+#### 为什么 react 不会帮我们绑定 this
+因为 react 的定位只是 UI 框架，
+
+#### propTypes
+> 用于 js 下类型限制（运行时报错，而非编译时报错）
+> 这是用来防止 使用 lib 的人传输错误的参数类型
+1. 安装 prop-types
+```
+yarn add -D prop-types
+```
+2. 使用 propTypes
+```
+static propTypes={
+    Message:propTypes.string
+}
+```
+
+#### displayName
+用于 React Developer Tools
+
+#### defaultProps
+> 用于指定默认 Props
+```
+static defaultProps={
+    Message:'ji'
+}
+```

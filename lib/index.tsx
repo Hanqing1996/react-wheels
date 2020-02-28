@@ -1,5 +1,32 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import Button from '../lib/button'
 
-ReactDOM.render(<Button/>,document.getElementById('root'))
+interface IProps {
+    Message:String
+}
+
+interface IState {
+    n:Number
+}
+
+class App extends React.Component<IProps, IState>{
+    static defaultProps={
+        Message:'ji'
+    }
+    constructor(props:IProps) {
+        super(props);
+        this.state={
+            n:1
+        }
+    }
+    render(){
+        return(
+            <div>
+                {this.props.Message}
+                {this.state.n}
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(<App/>,document.getElementById('root'))
