@@ -232,3 +232,27 @@ const Adapter=require('enzyme-adapter-react-16')
 
 enzyme.configure({ adapter: new Adapter() });
 ```
+
+#### 测试覆盖率
+安装 jest-junit
+```
+yarn add -D jest-junit
+```
+配置 jest.config.ci.js
+```
+// 测试覆盖率报告放在 coverage 目录
+// collectCoverageFrom
+const base = require('./jest.config')
+module.exports = Object.assign({}, base, {
+    reporters: ["jest-junit"], // 引用 jest-junit
+    collectCoverage: true, // 是否收集测试覆盖率
+    collectCoverageFrom: ["lib/**/*.{ts,tsx}", "!**/node_modules/**"], // 测试哪些文件
+    coverageDirectory: 'coverage', // 测试覆盖率报告放在 coverage 目录
+    coverageReporters: ['text', 'lcov'], // 测试覆盖率报告种类
+})
+```
+配置 package.json
+```
+"xxx": "cross-env NODE_ENV=test JEST_JUNIT_OUTPUT=./test-results/jest/results.xml jest --config=jest.config.ci.js"
+```
+之后运行 yarn xxx 即可获得测试覆盖率报告

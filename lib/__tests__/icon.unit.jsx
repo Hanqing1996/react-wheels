@@ -9,7 +9,7 @@ describe('icon', () => {
         expect(json).toMatchSnapshot()
     })
     it('onClick', function () {
-        const fn=jest.fn
+        const fn=jest.fn()
 
         const component=mount(<Icon name='draw' onClick={fn}/>)
         component.find('svg').simulate('click')
