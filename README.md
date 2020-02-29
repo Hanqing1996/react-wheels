@@ -1,14 +1,14 @@
-* 安装 webpack
+#### 安装 webpack
 ```
 yarn add webpack webpack-cli -D
 ``` 
-* 指定 mode
+#### 指定 mode
 > 配置 webpack.config.js 的 mode
 
-* 指定项目入口文件
+#### 指定项目入口文件
 > 配置 webpack.config.js 的 entry。之后的 html 会自动引用该入口文件 build 后的 js 代码。
 
-* 让 webpack 能编译 tsx
+#### 让 webpack 能编译 tsx
 1. 安装 awesome-typescript-loader
 ```
 yarn add -D awesome-typescript-loader
@@ -25,7 +25,7 @@ module: {
 },
 ```
 
-* 指定项输出目录（build 后的 js 文件放哪里）
+#### 指定项输出目录（build 后的 js 文件放哪里）
 > 配置 webpack.config.js 的 output
 ```
 entry:  {
@@ -39,13 +39,13 @@ output: {
 }
 ```
 
-* 让 webpack 支持 ts（能把 ts 编译 js）
+#### 让 webpack 支持 ts（能把 ts 编译 js）
 1. 安装 typescript
 2. 配置 tsconfig.json（直接抄，不要自己配）
+ 
+>至此，运行 npx webpack。我们就可以在 dist/lib 下找到 build 后的js文件
 
-#### 至此，运行 npx webpack。我们就可以在 dist/lib 下找到 build 后的js文件
-
-* build temporarily（临时自动 build）
+#### build temporarily（临时自动 build）
 1. 安装 webpack-dev-server
 ```
 yarn add webpack-dev-server -D 
@@ -56,7 +56,7 @@ yarn add webpack-dev-server -D
 5. 但是 build 结果只放入内存，不放入 dist 目录下。
 6. 要注意到 webpack-dev-server 不会有实质性的，文件形式地 build，而是仅仅展示一个 build 后的结果。所以 npx webpack-dev-server 不能代替 npx webpack。
 
-* 创建 index.html,并能自动引用 dist/lib 下 build 后的 js 文件
+#### 创建 index.html,并能自动引用 dist/lib 下 build 后的 js 文件
 > 我们的需求是，创建一个 index.html,它应该能自动引用 dist/lib 下 build 后的 js 文件。这里存在一个问题，这个 js 文件的名字是一个从 webpack.config.js 中获取的变量，因此必须是动态的所以我们需要保证 index.html 能动态地获取 build 后的 js 文件名
 > HtmlWebpackPlugin 可以达到以上要求
 1. 在 lib 目录下创建 index.html
@@ -65,9 +65,9 @@ yarn add webpack-dev-server -D
 4. 运行 npx webpack-dev-server，请求 index.html（http://localhost:8081/index.html,或直接 http://localhost:8081,webpack 会将 index.html 作为首页）,可以看到 index.html 页面
 5. 注意此时若改动 lib/index.tsx ,编译结果依然更新于内存而非 dist/lib 目录
 
-#### 至此，我们便建立了项目的首页
+> 至此，我们便建立了项目的首页
 
-* 在 tsx 中引入 react,react-DOM
+#### 在 tsx 中引入 react,react-DOM
 1. 安装 react,react-dom
 ```
 yarn add -D react
@@ -79,10 +79,10 @@ yarn add -D @types/react-dom
 yarn add -D @types/react
 ```
 
-* 在 index.tsx 中引入 button.tsx
+#### 在 index.tsx 中引入 button.tsx
 > 配置 webpack.config.js 的 resolve.extensions
 
-* 去除 bundle 中 react 相关依赖
+#### 去除 bundle 中 react 相关依赖
 > 修改 webpack.config.js 的 externals
 1. bundle 指的是 dist/lib 目录下的 index.js 文件。
 2. 去除 react 相关依赖指的是运行 npx webpack 后 bundle 去除 react 相关依赖，而 npx webpack-dev-sever 时项目开发时的运行状态，编译结果必须包含 react 依赖。
@@ -95,12 +95,12 @@ yarn add -D @types/react
 6. 换而言之，externals 对某个依赖的具体模块引用配置，规定了其他人使用我们 lib 时对于该依赖的模块引用方式
 7. 注意,我们的 index.tsx 同样需要引用 react,所以 externals 的 react 配置中必须包含我们在 index.tsx 中引用 react 的模块引用方式，否则项目在开发过程中无法顺利运行
 
-* 配置 webpack.config.dev.js 和 webpack.config.prod.js
+#### 配置 webpack.config.dev.js 和 webpack.config.prod.js
 > dev 环境下，需要 index.html（dist/lib 含 index.html）
 > prod 环境下，需要去除 bundle 对 react 等库的依赖
 注意 yarn start 用的是 webpack.config.dev.js
 
-* 配置 Node 相关环境变量
+#### 配置 Node 相关环境变量
 1. 安装 cross-env
 ```
 yarn add cross-env -D
@@ -114,7 +114,7 @@ yarn add cross-env -D
   }
 ```
 
-* 根据 lib 目录下 tsx 文件生成 .d.ts 文件
+#### 根据 lib 目录下 tsx 文件生成 .d.ts 文件
 > index.d.ts 用于告诉使用我们 lib 的人，我们的项目中使用了哪些类型
 1. 配置 tsconfig.json（如果不起效的话，直接去抄运行成功的）
 ```
@@ -127,7 +127,7 @@ yarn add cross-env -D
   "types":"./dist/index.d.ts", 
 ```
 
-* 配置 Jest（react 官配）
+#### 配置 Jest（react 官配）
 > Jest 不会读取 webpack 配置
 1. 安装对应依赖
 ```
@@ -151,7 +151,7 @@ yarn add -D @types/react-test-renderer
     }
 ```
 
-* 引入 svg 文件
+#### 引入 svg 文件
 > webpack 需要能识别以 .svg 结尾的文件。所以需要安装对应 loader:svg-sprite-loader ,并配置 webpack.config.js
 ```
 yarn add -D svg-sprite-loader
@@ -200,3 +200,35 @@ module: {
 1. sass-loader 把 icon.scss 语法改为 css 语法（内存中编译，不产生实际文件）
 2. css-loader 生成一个对象，包含 1 结果
 3. style-loader 根据对象生成 style 标签，放入 html 的 head
+
+#### mock SVG/SCSS
+> test 不测试 css,以及 svg,所以需要 mock SVG/SCSS
+1. 在 test 目录下创建 mock 目录
+2. 在 mock 文件夹下创建 file-mock.js 和 object-mock.js
+3. 配置 jest.config
+```
+// 当测试用例需要引用 css,svg 时，就从指定文件夹中取得 mock 数据
+moduleNameMapper: {
+    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/__mocks__/file-mock.js",
+    "\\.(css|less|sass|scss)$": "<rootDir>/test/__mocks__/object-mock.js",
+}
+```
+
+#### 单元测试
+```
+yarn test
+```
+> toMatchSnapshot目录：存储正确测试用例的代码快照,通过 yarn test -u 更新
+
+#### enzyme
+1. 安装对应依赖
+```
+yarn add -D enzyme@3.8.0 enzyme-adapter-react-16@1.9.1
+```
+2. 配置 setupTests.js
+```
+const enzyme=require('enzyme')
+const Adapter=require('enzyme-adapter-react-16')
+
+enzyme.configure({ adapter: new Adapter() });
+```

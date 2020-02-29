@@ -287,4 +287,20 @@ function ComponentA(props) {
   );
 }
 ```
-> 但是有一个 bug,
+
+
+#### 【memorable bug】 SyntaxError: Cannot use import statement outside a module
+```
+// setupTests.js
+import * as enzyme from 'enzyme';
+import * as Adapter from 'enzyme-adapter-react-16';
+
+enzyme.configure({ adapter: new Adapter() });
+```
+改为
+```
+const enzyme=require('enzyme')
+const Adapter=require('enzyme-adapter-react-16')
+
+enzyme.configure({ adapter: new Adapter() });
+```

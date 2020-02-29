@@ -1,18 +1,17 @@
 import React from 'react'
-import '../../helpers/importAlllcons'
+import '../../helpers/importAllIcons'
 import './icon.scss'
 import classes from "../../helpers/classes";
 
-interface iconProps extends React.SVGAttributes<SVGSVGElement> {
-    name:string,
-    classNames:(string|undefined)[]
+interface iconProps extends React.SVGAttributes<SVGElement> {
+    name:string
 }
 
-const Icon:React.FunctionComponent<iconProps>= ({classNames,name,...rest})=>{
+const Icon:React.FunctionComponent<iconProps>= ({className,name,...rest})=>{
     return(
         <div>
-            <svg className={classes('icon',...classNames)} {...rest}>
-                <use xlinkHref={`#${name}`}></use>
+            <svg className={classes('icon',className)} {...rest}>
+                <use xlinkHref={`${name}`}></use>
             </svg>
         </div>
     )
