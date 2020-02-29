@@ -181,4 +181,22 @@ declare module '*.svg'{
     "lib/**/*"
   ],
 ```
-> 此外，其实直接在 ts 中引入 import './svg.js'即可,就像
+> 此外，其实直接在 ts 中引入 import './svg.js'即可
+
+
+#### 配置 SCSS
+> webpack 需要能识别以 .svg 结尾的文件。所以需要安装对应 loader:svg-sprite-loader ,并配置 webpack.config.js
+```
+module: {
+    rules: [
+            {
+                test: /\.scss$/,
+                use: ['style-loader', 'css-loader', 'sass-loader']
+            }
+    ]
+}
+```
+* loader 作用流程
+1. sass-loader 把 icon.scss 语法改为 css 语法（内存中编译，不产生实际文件）
+2. css-loader 生成一个对象，包含 1 结果
+3. style-loader 根据对象生成 style 标签，放入 html 的 head

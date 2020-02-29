@@ -202,3 +202,25 @@ import './icons/draw.svg'
 ```
 import draw from './icons/draw.svg'
 ``` 
+
+#### tree-shaking
+1. 删除 bundle 中相关库没有依赖的部分
+2. tree-shaking 的基础是静态 import
+```
+// bundle 依赖如下，所以需要删除库A中的 a3,a4,B中的 b1,b2,
+import {a1,a2} from A
+import {b3} from B
+```
+```
+//A
+export default {a1,a2,a3,a4}
+```
+```
+//B
+export default {b1,b2,b3}
+```
+3. importAll('') 就无法实现 tree-shaking
+
+#### tsconfig.json 的 include
+1. 作用是指定编译哪些 ts 文件
+2. 不可以所有 ts 文件都编译，比如 node_modules 中包含上万个 ts 文件，如果编译，内存会炸
