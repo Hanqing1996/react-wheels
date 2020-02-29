@@ -6,4 +6,4 @@ const fn=(event: React.MouseEvent<SVGSVGElement, MouseEvent>)=>{
     console.log(event)
 }
 
-ReactDOM.render(<Icon name={'movie'} onClick={fn}/>,document.getElementById('root'))
+ReactDOM.render(<Icon name={'movie'} onClick={fn} classNames={['nameA','nameB',undefined,'nameC']}/>,document.getElementById('root'))

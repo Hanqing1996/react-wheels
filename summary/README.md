@@ -271,7 +271,7 @@ function ComponentA(props){
     )
 }
 ```
-编译成 js 
+用 babel 编译成 js 
 ```
 function ComponentA(props) {
   var rest = {
@@ -287,3 +287,4 @@ function ComponentA(props) {
   );
 }
 ```
+> 但是有一个 bug,
