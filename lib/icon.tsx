@@ -1,4 +1,5 @@
 import React from 'react'
+import './icon/importAlllcons'
 
 interface  iconProps {
     name:String
@@ -9,7 +10,9 @@ const Icon:React.FunctionComponent<iconProps>=(props)=>{
 
     return(
         <div>
-            icon
+            <svg>
+                <use xlinkHref={`#${props.name}`}></use>
+            </svg>
         </div>
     )
 }

@@ -182,3 +182,23 @@ static defaultProps={
 
 > Hooks API 只能用在 react 16.8.0 以上 
 
+* a/**/*
+> 匹配 a 目录下的所有文件
+
+
+#### .d.ts 什么时候有用
+```
+// custom.d.ts
+declare module '*.svg'{
+    const content:any;
+    export default content
+}
+```
+> 不 import 具体东西，无用
+```
+import './icons/draw.svg'
+``` 
+> import 具体东西，有用
+```
+import draw from './icons/draw.svg'
+``` 

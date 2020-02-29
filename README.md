@@ -151,3 +151,34 @@ yarn add -D @types/react-test-renderer
     }
 ```
 
+* 引入 svg 文件
+> webpack 需要能识别以 .svg 结尾的文件。所以需要安装对应 loader:svg-sprite-loader ,并配置 webpack.config.js
+```
+yarn add -D svg-sprite-loader
+```
+```
+module: {
+    rules: [
+        {
+            test: /\.svg$/,
+            loader:'svg-sprite-loader'
+        }
+    ]
+}
+```
+> 我们需要在 ts 中引入 svg 文件。所以需要声明 svg 类型，并配置 tsconfig.json
+```
+// types/custom.d.ts
+declare module '*.svg'{
+    const content:any;
+    export default content
+}
+```
+```
+// tsconfig.json
+  "include": [
+    "types/**/*",
+    "lib/**/*"
+  ],
+```
+> 此外，其实直接在 ts 中引入 import './svg.js'即可,就像
