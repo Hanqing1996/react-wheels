@@ -224,3 +224,66 @@ export default {b1,b2,b3}
 #### tsconfig.json 的 include
 1. 作用是指定编译哪些 ts 文件
 2. 不可以所有 ts 文件都编译，比如 node_modules 中包含上万个 ts 文件，如果编译，内存会炸
+
+
+
+#### fn 必须满足 iconProps.onClick 的类型要求
+```
+// index.tsx
+const fn=(event: React.MouseEvent<SVGSVGElement, MouseEvent>)=>{
+    console.log(event)
+}
+
+ReactDOM.render(<Icon name={'movie'} onClick={fn}/>,document.getElementById('root'))
+```
+```
+// icon.tsx
+interface iconProps {
+    name:String,
+    onClick:React.MouseEventHandler<SVGSVGElement>
+}
+
+const Icon:React.FunctionComponent<iconProps>=(props)=>{
+    return(
+        <div>
+            <svg className={'icon'} onClick={props.onClick}>
+                <use xlinkHref={`#${props.name}`}></use>
+            </svg>
+        </div>
+    )
+}
+```
+
+
+#### <ComponentB {...props}/>
+> 在 react.js 的语法里面，React.createElement 的第二个参数必须是一个包含所需参数的对象
+
+> 注意!!!! {...props} 的 {} 不表示一个对象，只是 jsx 用来标识 js 内容的分隔符
+```
+// jsx
+function ComponentA(props){
+    let rest={name:'libai',age:12,home:'hz'}
+    return(
+        <div>
+            <div> A 组件</div>
+            <ComponentB {...rest}/>
+        </div>
+    )
+}
+```
+编译成 js 
+```
+function ComponentA(props) {
+  var rest = {
+    name: "libai",
+    age: 12,
+    home: "hz"
+  };
+  return React.createElement(
+    "div",
+    null,
+    React.createElement("div", null, " A \u7EC4\u4EF6"),
+    React.createElement(ComponentB, rest) // rest 为包含所需参数的对象
+  );
+}
+```
