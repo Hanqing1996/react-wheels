@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import  Icon from  './icon'
+import  Icon from './components/icon/icon'
 
 const fn=(event: React.MouseEvent<SVGSVGElement, MouseEvent>)=>{
     console.log(event)
