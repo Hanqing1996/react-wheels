@@ -289,7 +289,8 @@ function ComponentA(props) {
 ```
 
 
-#### 【memorable bug】 SyntaxError: Cannot use import statement outside a module
+#### 【memorable bug】 
+* SyntaxError: Cannot use import statement outside a module
 ```
 // setupTests.js
 import * as enzyme from 'enzyme';
@@ -304,3 +305,7 @@ const Adapter=require('enzyme-adapter-react-16')
 
 enzyme.configure({ adapter: new Adapter() });
 ```
+* New snapshot was not written. The update flag must be explicitly passed to write a new snapshot. This is likely because this test is run in a continuous integration (CI) environment in which snapshots are not written by default. 
+> 是因为测试用例包含 snapshot，但我们没有把 snapshot push 到 repo
+* “JEST_JUNIT_OUTPUT=./test-results/jest/results.xml”执行后未生成 test-results 目录
+> 修改 jest-junit 版本

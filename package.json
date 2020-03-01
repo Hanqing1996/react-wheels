@@ -1,7 +1,7 @@
 {
-  "name": "react-wheel",
-  "version": "1.0.0",
-  "description": "",
+  "name": "zhq-react-wheel",
+  "version": "0.0.4",
+  "description": "react 写的UI框架",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {

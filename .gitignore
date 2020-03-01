@@ -1,3 +1,6 @@
 ./node_modules
 .idea
 ./dist
+./test-results
+junit.xml
+yarn-error.log

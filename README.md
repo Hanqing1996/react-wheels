@@ -257,35 +257,24 @@ module.exports = Object.assign({}, base, {
 ```
 之后运行 yarn xxx 即可获得测试覆盖率报告
 
-
+#### Circle CI
+> 配置 .circleci/config.yml
 * prepare
 ```
-  prepare:
-    <<: *defaults
-    steps:
-      - checkout // 从 github clone 相关代码
-      - restore_cache:
-          keys:
-            - v2-dependencies-{{ checksum "package.json" }} // 以当前的 package.json 的 MD5 为 key,创建一个包含 node_modules 的缓存快照，用于加快之后的执行速度
-      - run: yarn install // 安装所需依赖
-      - save_cache:
-          paths:
-            - node_modules
-          key: v2-dependencies-{{ checksum "package.json" }}
-      - persist_to_workspace:
-          root: .
-          paths:
-            - node_modules // ./node_modules 放置相关依赖
-```
-* build
-```
-
-```
-* test
-```
-
-```
-* publish
-```
-
+prepare:
+<<: *defaults
+steps:
+  - checkout // 从 github clone 相关代码
+  - restore_cache:
+      keys:
+        - v2-dependencies-{{ checksum "package.json" }} // 以当前的 package.json 的 MD5 为 key,创建一个包含 node_modules 的缓存快照，用于加快之后的执行速度
+  - run: yarn install // 安装所需依赖
+  - save_cache:
+      paths:
+        - node_modules
+      key: v2-dependencies-{{ checksum "package.json" }}
+  - persist_to_workspace:
+      root: .
+      paths:
+        - node_modules // ./node_modules 放置相关依赖
 ```
