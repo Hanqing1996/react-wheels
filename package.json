@@ -1,6 +1,6 @@
 {
   "name": "zhq-react-wheel",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "react 写的UI框架",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
