@@ -309,3 +309,25 @@ enzyme.configure({ adapter: new Adapter() });
 > 是因为测试用例包含 snapshot，但我们没有把 snapshot push 到 repo
 * “JEST_JUNIT_OUTPUT=./test-results/jest/results.xml”执行后未生成 test-results 目录
 > 修改 jest-junit 版本
+
+
+
+
+#### js、jsx、ts、tsx的区别
+> x:意为扩展
+* jsx 对 js 的扩展:jsx 可以写 xml 标签 
+```
+// jsx
+return <div></div>
+```
+```
+// js
+React.createElement('div',...)
+```
+* ts 对 js 的扩展:增加了类型
+```
+// ts
+const a:Number=1
+```
+* tsx 对 ts 的扩展:tsx 可以写 xml 标签 
+
