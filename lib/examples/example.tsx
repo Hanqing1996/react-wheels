@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom'
 import {HashRouter as Router, Link, Route} from 'react-router-dom';
 import IconExample from "./icon.example";
 import DialogExample from "./dialog.example";
+import LayoutExample from "./layout.example";
 import './example.scss'
 import '../index.scss'
 
@@ -24,11 +25,17 @@ ReactDOM.render(
                                 Dialog
                             </Link>
                         </li>
+                        <li>
+                            <Link to="/layout">
+                                layout
+                            </Link>
+                        </li>
                     </ul>
                 </aside>
                 <main>
                     <Route path='/icon' component={IconExample}/>
                     <Route path='/dialog' component={DialogExample}/>
+                    <Route path='/layout' component={LayoutExample}/>
                 </main>
             </div>
         </div>

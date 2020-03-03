@@ -486,6 +486,9 @@ const modal = (content: ReactNode | ReactFragment) => {
 }
 ```
 
+#### react 的组件不接受 style,
+
+
 #### 各个组件知识点
 * Dialog
     * 高阶函数 scopedClass:用于添加 class 前缀
@@ -515,4 +518,4 @@ const modal = (content: ReactNode | ReactFragment) => {
       
       console.log(api())
       ```
-    
+    * props.children:等效于 vue 的 slot

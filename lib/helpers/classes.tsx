@@ -4,10 +4,23 @@ const classes=(...names:(string|undefined)[])=>{ // ...names:string[] 表示参�
 }
 
 // className 添加前缀
-const scopedClassMaker=(prefix:String)=>{
-    return function (name?:String) {
-        return [prefix,name].filter(Boolean).join('-')
-    }
+interface Options {
+    extra:String
+}
+
+/***
+ * 用于添加前缀,并接受不加前缀的 className
+ * @param prefix:
+ * @param options
+ */
+const scopedClassMaker=(prefix?:String)=>{
+        return function (name:String,options?:Options) {
+            const extraName = options && options.extra
+            const classWithPrefix = [prefix, name].filter(Boolean).join('-')
+            return [classWithPrefix,extraName].join(' ')
+        }
 }
 
 export {classes,scopedClassMaker}
+
+
