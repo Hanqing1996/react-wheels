@@ -486,7 +486,10 @@ const modal = (content: ReactNode | ReactFragment) => {
 }
 ```
 
-#### react 的组件不接受 style,
+#### react 的组件默认不接受 style,
+
+
+
 
 
 #### 各个组件知识点
@@ -519,3 +522,13 @@ const modal = (content: ReactNode | ReactFragment) => {
       console.log(api())
       ```
     * props.children:等效于 vue 的 slot
+    * ReactElement（只接受节点，且不接受节点数组）ReactNode（除了节点，节点数组，还接受字符串，数字）
+* Layout
+    * 让组件接受 className,style:props 继承 React.HTMLAttributes<HTMLElement>    
+    ```
+    interface IProps extends React.HTMLAttributes<HTMLElement>{
+    }
+    ```
+    ```
+    <Layout className={'user-layout1 user-layout2'}>
+    ```
