@@ -1,7 +1,10 @@
 #### Dialog
 * Alert
+> 警告消息框
 * Confirm
+> 确认消息框
 * Model
+> 提示消息框
 
 * visible 
 > 是外来传递的参数，不是内部状态，所以 visible 的状态切换应该由用户自己实现

@@ -353,21 +353,6 @@ const a:Number=1
 * onClickClose
 * closeOnClickMask
 
-#### 访问函数内部变量的 API
-```
-// api:访问函数内部变量
-function fn(){
-    let visible=false
-    return ()=>{
-        return visible
-    }
-}
-
-const api=fn()
-
-console.log(api())
-```
-
 ####
 ```
 const onClose=modal(<h1>你好 <button onClick={()=>{onClose();}}>close</button></h1>)
@@ -393,3 +378,141 @@ let eventHandler = (event) => {
         document.removeEventListener('click', eventHandler)
     }
 ```
+
+#### 重构
+* 不要过早优化（重构），写完有重复操作的所有代码再优化
+* 将各部分代码的公共部分抽取到一个函数里
+* 公共函数的参数应根据各个部分情况设置（比如都有 visible=false ,那么公共函数就不必设置 visible 参数）
+* 只要有一个部分需要 return XXX,则公共函数必须 return XXX
+```
+const alert = (content: String) => {
+    // onClose 无法访问到 setX,所以无法直接切换 visible 状态，因此采用更新容器 div 内部组件的方式实现关闭 Dialog
+    const onClose = () => {
+        // 容器 div 内部组件更新
+        ReactDOM.render(React.cloneElement(component, {visible: false}), div)
+        // 移除 div 上的组件
+        ReactDOM.unmountComponentAtNode(div)
+        // 移除 div
+        div.remove()
+    }
+    // onClose 无法访问到 setX,所以无法直接切换 visible 状态，因此采用更新容器 div 内部组件的方式实现关闭 Dialog
+    const component = <Dialog visible={true} onClose={() => {
+        onClose()
+    }}>{content}</Dialog>
+    const div = document.createElement('div')
+    document.body.appendChild(div)
+    ReactDOM.render(component, div)
+}
+
+const confirm = (content: String, yes?: Function, no?: Function) => {
+    const onClose = () => {
+        ReactDOM.render(React.cloneElement(component, {visible: false}), div)
+        ReactDOM.unmountComponentAtNode(div)
+        div.remove()
+    }
+
+    const onYes = () => {
+        onClose()
+        yes && yes()
+    }
+    const onNo = () => {
+        onClose()
+        no && no()
+    }
+    const component = <Dialog
+        visible={true}
+        onClose={onNo}
+        buttons={[<button onClick={onYes}>yes</button>, <button onClick={onNo}>no</button>]}
+    >{content}</Dialog>
+    const div = document.createElement('div')
+    document.body.appendChild(div)
+    ReactDOM.render(component, div)
+}
+
+const modal = (content: ReactNode | ReactFragment) => {
+
+    const onClose = () => {
+        ReactDOM.render(React.cloneElement(component, {visible: false}), div)
+        ReactDOM.unmountComponentAtNode(div)
+        div.remove()
+    }
+    const component = <Dialog visible={true} onClose={onClose}>{content}</Dialog>
+    const div = document.createElement('div')
+    document.body.appendChild(div)
+    ReactDOM.render(component, div)
+    return onClose
+}
+```
+所以重构为
+```
+const xxx = (content: ReactNode | ReactFragment, buttons?: Array<ReactElement>) => {
+    const onClose = () => {
+        ReactDOM.render(React.cloneElement(component, {visible: false}), div)
+        ReactDOM.unmountComponentAtNode(div)
+        div.remove()
+    }
+    // onClose 无法访问到 setX,所以无法直接切换 visible 状态，因此采用更新容器 div 内部组件的方式实现关闭 Dialog
+    const component = <Dialog
+        visible={true}
+        onClose={onClose}
+        buttons={buttons}>{content}</Dialog>
+    const div = document.createElement('div')
+    document.body.appendChild(div)
+    ReactDOM.render(component, div)
+    return onClose
+}
+
+const alert = (content: String) => {
+    xxx(content)
+}
+
+const confirm = (content: String, yes?: Function, no?: Function) => {
+
+    const onYes = () => {
+        onClose()
+        yes && yes()
+    }
+    const onNo = () => {
+        onClose()
+        no && no()
+    }
+
+    const onClose=xxx(content,[<button onClick={onYes}>yes</button>, <button onClick={onNo}>no</button>])
+}
+
+const modal = (content: ReactNode | ReactFragment) => {
+    const onClose=xxx(content)
+    return onClose
+}
+```
+
+#### 各个组件知识点
+* Dialog
+    * 高阶函数 scopedClass:用于添加 class 前缀
+    * Fragment:效果同 vue 的 template
+    * 【重构】公共函数 makeDialog
+    * 动态生成组件:ReactDOM.render
+     ```
+      const component = <Dialog
+          visible={true}
+          onClose={onClose}
+          buttons={buttons}>{content}</Dialog>
+      const div = document.createElement('div')
+      document.body.appendChild(div)
+      ReactDOM.render(component, div)
+    ```
+    * 访问函数内部变量的 API
+      ```
+      // api:访问函数内部变量
+      function fn(){
+          let visible=false
+          return ()=>{
+              return visible
+          }
+      }
+      
+      const api=fn()
+      
+      console.log(api())
+      ```
+    
