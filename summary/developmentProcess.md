@@ -96,9 +96,17 @@ yarn add -D @types/react
 7. 注意,我们的 index.tsx 同样需要引用 react,所以 externals 的 react 配置中必须包含我们在 index.tsx 中引用 react 的模块引用方式，否则项目在开发过程中无法顺利运行
 
 #### 配置 webpack.config.dev.js 和 webpack.config.prod.js
-> dev 环境下，需要 index.html（dist/lib 含 index.html）
-> prod 环境下，需要去除 bundle 对 react 等库的依赖
-注意 yarn start 用的是 webpack.config.dev.js
+* base 环境
+各类文件格式识别（css,svg,ts）。js 不用，默认支持。
+* dev 环境
+1. 配置入口文件（js）和开发时预览页面（index.html）。入口文件用于被预览页面引用
+2. 事实上 dev 环境根本不关心 bundle 的情况。之所以配置入口文件和开发时预览页面，也仅仅是为了入口文件用于被预览页面引用。
+3. yarn start 仅仅是搭建一个临时服务器，用于预览开发效果，不包括生成 bundle 这一步。（所以 yarn build:dev 是个不成立的指令）
+* prod 环境
+1. 去除 bundle 对 react 等库的依赖
+2. 不需要预览页面，入口文件用于导出所有组件
+3. 配置 bundle 中 js 模块引用方式（bundle 中的 ts 由 ts.config.json 负责） 
+
 
 #### 配置 Node 相关环境变量
 1. 安装 cross-env

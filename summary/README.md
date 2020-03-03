@@ -70,9 +70,10 @@ account('take')(20) // 60
 2. ts
 
 * 不加 -D
-> 浏览器会需要
+> 浏览器/使用 lib 的人会需要
 1. react
 2. vue
+3. react-router
 
 #### 依赖管理
 ```
@@ -309,8 +310,22 @@ enzyme.configure({ adapter: new Adapter() });
 > 是因为测试用例包含 snapshot，但我们没有把 snapshot push 到 repo
 * “JEST_JUNIT_OUTPUT=./test-results/jest/results.xml”执行后未生成 test-results 目录
 > 修改 jest-junit 版本
-
-
+*  Could not find a declaration file for module 'react-router-dom'. 
+```
+yarn add @types/react-router-dom 
+```
+* props.children 为可选字段，可能导致函数组件返回类型为 undefined
+> 解决方法：用 div 包裹 props.children
+```
+const Dialog: React.FunctionComponent<dialogProps> = (props) => {
+    return (
+        props.visible ?
+            <div>
+                props.children
+            </div> : null
+    )
+}
+```
 
 
 #### js、jsx、ts、tsx的区别
@@ -331,3 +346,50 @@ const a:Number=1
 ```
 * tsx 对 ts 的扩展:tsx 可以写 xml 标签 
 
+#### 命名
+> Variable
+* maskClosable
+> Function
+* onClickClose
+* closeOnClickMask
+
+#### 访问函数内部变量的 API
+```
+// api:访问函数内部变量
+function fn(){
+    let visible=false
+    return ()=>{
+        return visible
+    }
+}
+
+const api=fn()
+
+console.log(api())
+```
+
+####
+```
+const onClose=modal(<h1>你好 <button onClick={()=>{onClose();}}>close</button></h1>)
+```
+不能写成
+```
+const onClose=modal(<h1>你好 <button onClick={onClose}>close</button></h1>)
+```
+因为 JS引擎是从右往左解析的，一旦发现未声明的 onClose，就会报错
+* 类似操作
+```
+let eventHandler = (event) => {
+
+    //由于setTimeout的存在,在点击close按钮及trigger按钮后closeContent会先于eventHandler被触发，则this.$refs.contentWrapper为undefined
+    if(!this.$refs.contentWrapper)
+        return
+
+
+    // 只有点击其它位置,才会触发eventHandler("其它位置的定义"是event.target不是文本内容和button)
+    if(!this.$refs.contentWrapper.contains(event.target)&&!this.$refs.triggerWrapper.contains(event.target)){
+
+        this.closeContent()
+        document.removeEventListener('click', eventHandler)
+    }
+```
