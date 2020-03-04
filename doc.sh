@@ -1,5 +1,5 @@
 rm -rf docs
-yarn docs:build
-git add *
+yarn doc:build
+git add docs
 git commit -m"update docs"
 git push

@@ -19,7 +19,7 @@ ReactDOM.render(
         <Layout className={scopedClass('')}>
             <Header className={scopedClass('header')}>
                 <h1>
-                    zhq-react-wheel
+                    my-react-wheel
                 </h1>
             </Header>
             <Layout className={scopedClass('')}>
