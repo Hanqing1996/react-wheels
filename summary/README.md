@@ -490,8 +490,31 @@ const modal = (content: ReactNode | ReactFragment) => {
 
 
 #### 受控组件和非受控组价
+```
+UI=f(state)
+```
+* 受控组件
+> react 哲学：UI=f(state)。state 不变，则 UI 不变
+```
+// value 难写（onChange=>setName）易读（name）
+const [name,setName]=useState('libai')
+<input type="text" value={name} onChange={(e)=>{setName(e.target.value)}}/>
+```
+* 非受控组件
+> 不受 react 控制
+```
+// value 易写（用户直接输入）难读（必须用 useRef）
+const refInput=useRef(null)
+setInterval(()=>{
+    console.log(refInput&&refInput);
+},3000)
+<input type="text" defaultValue='libai' ref={refInput}/>
+```
 
 
+
+#### 
+react 和 vue 都认为，props 的修改只能由父组件执行，vue 通过事件机制/sync 实现。react 通过函数与作用域原理实现。
 
 #### 各类 scss 文件
 * example.scss
