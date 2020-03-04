@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react'
 import Form,{FormValue} from "../../components/form/form";
 import {useState} from "react";
+import {validator} from '../../components/form/validator'
 
 const IconExample: React.FunctionComponent = () => {
     const [formData, setFormData] = useState<FormValue>({
@@ -12,7 +13,15 @@ const IconExample: React.FunctionComponent = () => {
         {name: 'password', label: '密码', input: {type: 'text'}},
     ])
     const onSubmit = () => {
-        console.log(formData);
+
+        const rules=[
+            {key:'username',required:true,minLength:6}
+        ]
+
+        const errors=validator(formData,rules)
+        console.log(errors);
+
+        //axios.post('signIn',formData).then(success,fail)
     }
     const onChange = (newFormValue:FormValue) => {
         setFormData(newFormValue)

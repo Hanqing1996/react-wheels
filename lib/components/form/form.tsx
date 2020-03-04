@@ -32,7 +32,7 @@ const Form: React.FunctionComponent<formProps> = (props) => {
                 props.fields.map((field, index) =>
                     <div key={index}>
                         <label>{field.label}</label>
-                        <input type={field.input.type} value={formData[field.name]} onChange={(e) => {
+                        <input type={field.name} value={formData[field.name]} onChange={(e) => {
                             onInputChange(field.name, e.target.value)
                         }}/>
                     </div>)
