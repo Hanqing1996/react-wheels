@@ -349,3 +349,33 @@ workflows:
 
 #### 添加 Status badges
 [在 circle CI 的 Settings 页面可以找到链接](https://circleci.com/gh/Hanqing1996/react-wheels/edit#badges)
+
+#### 制作官网
+1. 安装 raw-loader
+```
+yarn add -D raw-loader
+```
+2. 获取组件代码
+```
+// icon.code.tsx
+import React from 'react'
+import ShowCode from '../showCode'
+import IconExample from "../examples/icon.example";
+
+const example=require('!!raw-loader!../examples/icon.example.tsx')
+
+const iconCode: React.FunctionComponent = () => {
+    return (
+        <div>
+            <ShowCode code={example.default}>
+                <IconExample/>
+            </ShowCode>
+        </div>
+    )
+}
+
+export default iconCode
+```
+3. 代码高亮
+* 安装 prism-react-renderer
+* 

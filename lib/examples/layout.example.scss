@@ -1,0 +1,22 @@
+.e-h2{
+  padding-top: 10px;
+}
+
+.e-layout{
+  width: 500px;
+  height: 500px;
+  > .wheel-layout-header{
+    background: #7dbcea;
+  }
+  > .wheel-layout-aside{
+    width: 150px;
+    background: #1890ff;
+  }
+  > .wheel-layout-content{
+    background: rgb(16, 142, 233);
+  }
+  > .wheel-layout-footer{
+    background: #7dbcea;
+  }
+
+}

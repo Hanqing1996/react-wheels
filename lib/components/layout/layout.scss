@@ -1,29 +1,15 @@
 @import "../../helper";
 
 .wheel-layout{
-  height: 500px;
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  &-header{
-    background: #7dbcea;
-    height: 100px;
-  }
   &-content{
     flex-grow: 1;
-    background: rgb(16, 142, 233);
-  }
-  &-footer{
-    background: #7dbcea;
-    height: 50px;
-  }
-  &-aside{
-    position: relative;
-    background: #1890ff;
-    width: 200px;
-    height: 500px;
   }
   &.layoutHasSider {
     flex-direction: row;
+    > .wheel-layout{
+      flex-direction: column;
+    }
   }
 }

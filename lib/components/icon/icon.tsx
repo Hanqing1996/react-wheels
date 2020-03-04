@@ -9,11 +9,11 @@ interface iconProps extends React.SVGAttributes<SVGElement> {
 
 const Icon:React.FunctionComponent<iconProps>= ({className,name,...rest})=>{
     return(
-        <div>
+        <span>
             <svg className={classes('wheel-icon',className)} {...rest}>
                 <use xlinkHref={`#${name}`}></use>
             </svg>
-        </div>
+        </span>
     )
 }
 
