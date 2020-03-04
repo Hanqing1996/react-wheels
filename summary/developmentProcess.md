@@ -383,8 +383,19 @@ export default iconCode
 1. 配置 webpack.config.doc_build.js
 * bundle 需要包括 react 依赖（lib 用户会自己安装 react 依赖。可是浏览器不会自己安装 react 呀）
 * bundle 不包括 .d.ts 文件，只需要一个 html 页面以及相应 js 文件
-* bundle 应该输出到 doc 目录，而非 dist 目录
+* bundle 应该输出到 docs 目录，而非 dist 目录
 2. package.json 添加命令
 ```
 "doc:build": "cross-env NODE_ENV=production webpack --config webpack.config.doc_build.js",
 ```
+3. 在 repo 的 settings/Github Pages 选择 docs folder
+4. 修改 package.json 的 homepage
+```
+"homepage": "https://github.com/Hanqing1996/react-wheels/docs",
+```
+5. git push（包括 docs 目录）
+6. 将以上步骤写成
+
+
+
+mv -f doc/* ./
