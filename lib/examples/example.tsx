@@ -10,6 +10,7 @@ import Layout,{Aside,Header,Content,Footer} from "../components/layout/layout";
 import IconCode from '../code/icon.code'
 import DialogCode from '../code/dialog.code'
 import LayoutCode from "../code/layout.code";
+import FormCode from '../code/form.code'
 
 import {scopedClassMaker} from "../helpers/classes";
 const scopedClass = scopedClassMaker('example-layout')
@@ -41,12 +42,18 @@ ReactDOM.render(
                                 Layout-布局
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink to="/form">
+                                Form-表单
+                            </NavLink>
+                        </li>
                     </ul>
                 </Aside>
                 <Content className={scopedClass('content')}>
                     <Route path='/icon' component={IconCode}/>
                     <Route path='/dialog' component={DialogCode}/>
                     <Route path='/layout' component={LayoutCode}/>
+                    <Route path='/form' component={FormCode}/>
                 </Content>
             </Layout>
             <Footer className={scopedClass('footer')}>&copy; zhq</Footer>

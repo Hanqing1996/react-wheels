@@ -1,6 +1,6 @@
 import * as React from 'react'
-import Layout, {Header, Content, Footer} from "../components/layout/layout";
-import {scopedClassMaker} from "../helpers/classes";
+import Layout, {Header, Content, Footer} from "../../components/layout/layout";
+import {scopedClassMaker} from "../../helpers/classes";
 import './layout.example.scss'
 
 const scopedClass = scopedClassMaker('e')

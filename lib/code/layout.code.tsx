@@ -1,14 +1,11 @@
 import React from 'react'
 import ShowCode from '../showCode'
-import LayoutExample1 from "../examples/layout.example1";
-import LayoutExample2 from "../examples/layout.example2";
-import LayoutExample3 from "../examples/layout.example3";
-import LayoutExample4 from "../examples/layout.example4";
+import {LayoutExample1,LayoutExample2,LayoutExample3,LayoutExample4} from "../examples/layout/exportLayouts";
 
-const example1 = require('!!raw-loader!../examples/layout.example1.tsx')
-const example2 = require('!!raw-loader!../examples/layout.example2.tsx')
-const example3 = require('!!raw-loader!../examples/layout.example3.tsx')
-const example4 = require('!!raw-loader!../examples/layout.example4.tsx')
+const example1 = require('!!raw-loader!../examples/layout/layout.example1.tsx')
+const example2 = require('!!raw-loader!../examples/layout/layout.example2.tsx')
+const example3 = require('!!raw-loader!../examples/layout/layout.example3.tsx')
+const example4 = require('!!raw-loader!../examples/layout/layout.example4.tsx')
 
 const LayoutCode: React.FunctionComponent = () => {
     return (

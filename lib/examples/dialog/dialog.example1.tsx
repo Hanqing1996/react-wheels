@@ -1,7 +1,6 @@
 import * as React from 'react'
-import Dialog from "../components/dialog/dialog";
+import Dialog from "../../components/dialog/dialog";
 import {useState} from "react";
-
 
 export default function () {
     const [x, setX] = useState(false)

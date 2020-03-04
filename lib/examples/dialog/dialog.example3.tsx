@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {confirm} from "../components/dialog/dialog";
+import {confirm} from "../../components/dialog/dialog";
 
 export default function () {
     return (

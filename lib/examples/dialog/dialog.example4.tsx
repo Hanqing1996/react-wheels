@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {modal} from "../components/dialog/dialog";
+import {modal} from "../../components/dialog/dialog";
 
 export default function () {
     return (
