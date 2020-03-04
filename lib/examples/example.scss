@@ -1,5 +1,4 @@
 @import '../_helper.scss';
-
 * {margin: 0;padding: 0; box-sizing: border-box;}
 *::before {box-sizing: border-box}
 *::after {box-sizing: border-box}
@@ -11,9 +10,9 @@ a {
   padding: 8px 16px;
   font-weight: lighter;
   &:hover {
-    color:#1890ff ;
+    color: #1890ff;
   }
-  &.active{
+  &.active {
     background: #e6f7ff;
     color: #1890ff;
   }
@@ -24,7 +23,7 @@ a {
   &-header {
     background: $header-footer-color;
   }
-  &-content{
+  &-content {
     padding-left: 10px;
   }
   &-aside {
@@ -44,10 +43,19 @@ a {
     background: $header-footer-color;
   }
 }
-
-pre{
-  font-family: 'monospace','Consolas';
+pre {
+  font-family: 'monospace', 'Consolas';
   padding: 5px;
   margin: 5px;
   max-width: 1000px;
+}
+.showCode {
+  margin: 1em;
+  white-space: nowrap;font-size: $font-size; height: $button-height; padding: 0em 1em;
+  border-radius: $border-radius; border: 1px solid $border-color;
+  background: $button-bg;
+  display: inline-flex; justify-content: center; align-items: center;
+  &:hover { border-color: $border-color-hover; }
+  &:active { background-color: $button-active-bg; }
+  &:focus { outline: none; }
 }

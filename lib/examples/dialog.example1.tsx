@@ -9,7 +9,7 @@ export default function () {
     return (
         <div>
             <Dialog visible={x} buttons={
-                [<button onClick={() => {
+                [<button  onClick={() => {
                     setX(!x)
                 }}>ok</button>,
                     <button onClick={() => {

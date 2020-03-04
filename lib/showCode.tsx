@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import Highlight, {defaultProps} from "prism-react-renderer";
 
 interface IProps {
@@ -6,11 +6,20 @@ interface IProps {
 }
 
 const ShowCode: React.FunctionComponent<IProps> = (props) => {
+
+    const [codeVisible, setVisible] = useState(false)
+    const trigger = () => {
+        setVisible(!codeVisible)
+    }
+
     return (
         <div>
             <div>
                 {props.children}
             </div>
+            <button className={'showCode'} onClick={trigger}>代码展示</button>
+
+            {codeVisible&&(
             <Highlight {...defaultProps} code={props.code} language="jsx">
                 {({className, style, tokens, getLineProps, getTokenProps}) => (
                     <pre className={className} style={style}>
@@ -24,6 +33,7 @@ const ShowCode: React.FunctionComponent<IProps> = (props) => {
             </pre>
                 )}
             </Highlight>
+            )}
         </div>
     )
 }
