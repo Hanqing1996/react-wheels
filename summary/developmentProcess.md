@@ -377,5 +377,14 @@ const iconCode: React.FunctionComponent = () => {
 export default iconCode
 ```
 3. 代码高亮
-* 安装 prism-react-renderer
-* 
+> 安装 prism-react-renderer
+
+#### 部署官网
+1. 配置 webpack.config.doc_build.js
+* bundle 需要包括 react 依赖（lib 用户会自己安装 react 依赖。可是浏览器不会自己安装 react 呀）
+* bundle 不包括 .d.ts 文件，只需要一个 html 页面以及相应 js 文件
+* bundle 应该输出到 doc 目录，而非 dist 目录
+2. package.json 添加命令
+```
+"doc:build": "cross-env NODE_ENV=production webpack --config webpack.config.doc_build.js",
+```
