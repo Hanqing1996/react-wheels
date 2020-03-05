@@ -35,14 +35,14 @@ const IconExample: React.FunctionComponent = () => {
     }
 
     return (
-        <div>
+        <Fragment>
             <Form value={formData} errors={errors} fields={fields} onChange={onChange} onSubmit={onSubmit} buttons={
                 <Fragment>
                     <button type={'submit'} className={'form-button'}>提交</button>
                     <button className={'form-button'}>返回</button>
                 </Fragment>
             }/>
-        </div>
+        </Fragment>
     )
 }
 
