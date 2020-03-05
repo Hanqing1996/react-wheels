@@ -1,14 +1,18 @@
-import * as React from 'react'
+import React, {Fragment} from 'react'
 import Dialog from "../../components/dialog/dialog";
 import {useState} from "react";
+import {scopedClassMaker} from '../../helpers/classes'
+import './dialog.example.scss'
+
+const scopedClass = scopedClassMaker('example')
 
 export default function () {
     const [x, setX] = useState(false)
 
     return (
-        <div>
+        <Fragment>
             <Dialog visible={x} buttons={
-                [<button  onClick={() => {
+                [<button onClick={() => {
                     setX(!x)
                 }}>ok</button>,
                     <button onClick={() => {
@@ -19,7 +23,7 @@ export default function () {
                     maskClosable={true}>
                 <div>content</div>
             </Dialog>
-            <button onClick={() => setX(!x)}>trigger</button>
-        </div>
+            <button onClick={() => setX(!x)} className={scopedClass('button')}>trigger</button>
+        </Fragment>
     )
 }

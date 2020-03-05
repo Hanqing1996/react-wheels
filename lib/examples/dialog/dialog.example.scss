@@ -1,0 +1,7 @@
+@import "../../helper";
+
+.example-button{
+  @include button-style;
+  background-color: $main-color;
+  color: white;
+}

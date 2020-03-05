@@ -1,4 +1,4 @@
-$main-color:blue;
+$main-color:#1890ff;
 $header-footer-color:#EEEEEE;
 
 $blue: blue;
@@ -21,4 +21,14 @@ $input-height: 32px;
 $white:white;
 .box-shadow{
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+@mixin button-style {
+  white-space: nowrap;font-size: $font-size; height: $button-height; padding: 0em 1em;
+  border-radius: $border-radius; border: 1px solid $border-color;
+  background: $button-bg;
+  display: inline-flex; justify-content: center; align-items: center;
+  &:hover { border-color: $border-color-hover; }
+  &:active { background-color: $button-active-bg; }
+  &:focus { outline: none; }
 }

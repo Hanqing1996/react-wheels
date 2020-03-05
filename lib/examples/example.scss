@@ -24,7 +24,7 @@ a {
     background: $header-footer-color;
   }
   &-content {
-    padding-left: 10px;
+    padding: 8px;
   }
   &-aside {
     h2 {
@@ -50,12 +50,9 @@ pre {
   max-width: 1000px;
 }
 .showCode {
-  margin: 1em;
-  white-space: nowrap;font-size: $font-size; height: $button-height; padding: 0em 1em;
-  border-radius: $border-radius; border: 1px solid $border-color;
-  background: $button-bg;
-  display: inline-flex; justify-content: center; align-items: center;
-  &:hover { border-color: $border-color-hover; }
-  &:active { background-color: $button-active-bg; }
-  &:focus { outline: none; }
+  @include button-style;
+  margin: 8px 0;
+  &:last-child{
+    //margin-bottom: 0;
+  }
 }

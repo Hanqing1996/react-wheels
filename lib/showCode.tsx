@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {Fragment,useState} from 'react'
 import Highlight, {defaultProps} from "prism-react-renderer";
 
 interface IProps {
@@ -13,7 +13,7 @@ const ShowCode: React.FunctionComponent<IProps> = (props) => {
     }
 
     return (
-        <div>
+        <Fragment>
             <div>
                 {props.children}
             </div>
@@ -34,7 +34,7 @@ const ShowCode: React.FunctionComponent<IProps> = (props) => {
                 )}
             </Highlight>
             )}
-        </div>
+        </Fragment>
     )
 }
 

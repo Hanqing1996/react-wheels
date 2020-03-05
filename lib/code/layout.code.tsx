@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{Fragment} from 'react'
 import ShowCode from '../showCode'
 import {LayoutExample1,LayoutExample2,LayoutExample3,LayoutExample4} from "../examples/layout/exportLayouts";
 
@@ -9,7 +9,7 @@ const example4 = require('!!raw-loader!../examples/layout/layout.example4.tsx')
 
 const LayoutCode: React.FunctionComponent = () => {
     return (
-        <div>
+        <Fragment>
             <ShowCode code={example1.default}>
                 <LayoutExample1/>
             </ShowCode>
@@ -22,7 +22,7 @@ const LayoutCode: React.FunctionComponent = () => {
             <ShowCode code={example4.default}>
                 <LayoutExample4/>
             </ShowCode>
-        </div>
+        </Fragment>
     )
 }
 

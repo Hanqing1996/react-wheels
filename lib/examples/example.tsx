@@ -5,14 +5,17 @@ import {HashRouter as Router, NavLink, Route} from 'react-router-dom';
 import './example.scss'
 import '../index.scss'
 
-import Layout,{Aside,Header,Content,Footer} from "../components/layout/layout";
+import Layout, {Aside, Header, Content, Footer} from "../components/layout/layout";
 
 import IconCode from '../code/icon.code'
 import DialogCode from '../code/dialog.code'
 import LayoutCode from "../code/layout.code";
 import FormCode from '../code/form.code'
+import InputCode from '../code/input.code'
+import ButtonCode from '../code/button.code'
 
 import {scopedClassMaker} from "../helpers/classes";
+
 const scopedClass = scopedClassMaker('example-layout')
 
 ReactDOM.render(
@@ -29,7 +32,12 @@ ReactDOM.render(
                     <ul>
                         <li>
                             <NavLink to="/icon">
-                                Icon-按钮
+                                Icon-图标
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/button">
+                                Button-按钮
                             </NavLink>
                         </li>
                         <li>
@@ -43,6 +51,11 @@ ReactDOM.render(
                             </NavLink>
                         </li>
                         <li>
+                            <NavLink to="/input">
+                                Input-输入框
+                            </NavLink>
+                        </li>
+                        <li>
                             <NavLink to="/form">
                                 Form-表单
                             </NavLink>
@@ -51,8 +64,10 @@ ReactDOM.render(
                 </Aside>
                 <Content className={scopedClass('content')}>
                     <Route path='/icon' component={IconCode}/>
+                    <Route path='/button' component={ButtonCode}/>
                     <Route path='/dialog' component={DialogCode}/>
                     <Route path='/layout' component={LayoutCode}/>
+                    <Route path='/input' component={InputCode}/>
                     <Route path='/form' component={FormCode}/>
                 </Content>
             </Layout>
