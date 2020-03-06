@@ -8,14 +8,14 @@ interface FormRule {
     maxLength?: number
     validator?: {
         name: string,
-        newValidate: (data: string) => Promise<unknown>
+        newValidate: (data: string) => Promise<any>
     }
 }
 
 type FormRules = Array<FormRule>
 
 export interface FormErrors {
-    [key: string]: string []
+    [key: string]: Promise<any> []
 }
 
 // 判断 value 是否存在
@@ -32,11 +32,18 @@ const isEmpty = (value: any) => value === undefined || value === null || value =
 //     })
 //     return result
 // }
-export const validator = (data: FormValue, rules: FormRules) => {
+
+const getPromise = (message: string) => {
+    return new Promise((resolve, reject) => {
+        resolve(message)
+    })
+}
+
+export const validator = (data: FormValue, rules: FormRules,callback:(result:FormErrors)=>void):void => {
     let errors: FormErrors = {}
 
-    const addError = (key: string, message: string) => {
-        errors[key] = errors[key] === undefined ? [message] : [...errors[key], message]
+    const addError = (key: string, verifyPromise: Promise<any>) => {
+        errors[key] = errors[key] === undefined ? [verifyPromise] : [...errors[key], verifyPromise]
     }
 
     // 用rule遍历data
@@ -44,36 +51,44 @@ export const validator = (data: FormValue, rules: FormRules) => {
         let value = data[rule.key]
 
         if (rule.validator) {
-            rule.validator.newValidate(value).then(() => {
-            }, () => {
-                addError(rule.key, '用户名已存在')
-                console.log('异步校验完成,经查询，用户名已存在');
-            })
+            addError(rule.key, rule.validator.newValidate(value))
         }
 
         if (rule.required) {
             if (isEmpty(value)) {
-                addError(rule.key, '必填')
+                addError(rule.key, getPromise('必填'))
             }
         }
         if (rule.minLength) {
             if (!isEmpty(value) && value.length < rule.minLength) {
-                addError(rule.key, '太短')
+                addError(rule.key, getPromise('太短'))
             }
         }
         if (rule.maxLength) {
             if (!isEmpty(value) && value.length > rule.maxLength) {
-                addError(rule.key, '太长')
+                addError(rule.key, getPromise('太长'))
             }
         }
         if (rule.pattern) {
             if (!isEmpty(value) && !rule.pattern.test(value)) {
-                addError(rule.key, '格式不正确')
+                addError(rule.key, getPromise('格式不正确'))
             }
         }
 
     })
-    return errors
+
+    let temp: FormErrors = {}
+    const sum: Number = Object.keys(errors).length
+    Object.keys(errors).map((key, index) => {
+
+        temp[key] = []
+        Promise.all(errors[key]).then((info) => {
+            temp[key] = [...temp[key], ...info].filter(Boolean)
+            if (sum === (index + 1)) {
+                callback(temp)
+            }
+        })
+    })
 }
 
 

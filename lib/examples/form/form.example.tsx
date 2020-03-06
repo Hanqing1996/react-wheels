@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react'
 import Form, {FormValue} from "../../components/form/form";
 import {useState} from "react";
-import {validator} from '../../components/form/validator'
+import {validator,FormErrors} from '../../components/form/validator'
 import './form.example.scss'
 
 const IconExample: React.FunctionComponent = () => {
@@ -32,11 +32,23 @@ const IconExample: React.FunctionComponent = () => {
                     }
                 }
             },
-            {key: 'password', required: true}
+            {key: 'password', required: true},
+            {
+                key: 'password', validator: {
+                    name: 'unique', newValidate: (data: string) => {
+                        return new Promise((resolve, reject) => {
+                            checkUserName(data, resolve, reject)
+                        })
+                    }
+                }
+            },
         ]
 
-        const errors=validator(formData, rules)
-        setErrors(errors)
+        validator(formData, rules,(result:FormErrors)=>{
+            console.log('result');
+            console.log(result);
+            setErrors(result)
+        })
 
         //axios.post('signIn',formData).then(success,fail)
     }
@@ -48,16 +60,16 @@ const IconExample: React.FunctionComponent = () => {
     const checkUserName = (name: string, success: Function, fail: Function) => {
         setTimeout(() => {
             if (userNames.includes(name)) {
-                fail('用户名已存在')
+                success('用户名已存在')
             } else {
-                success('')
+                success(undefined)
             }
-        }, 3000)
+        }, 1000)
     }
 
     return (
         <Fragment>
-            <Form value={formData} errors={errors} fields={fields} onChange={onChange} onSubmit={onSubmit} buttons={
+            <Form value={formData} errorsDisplay={'all'} errors={errors} fields={fields} onChange={onChange} onSubmit={onSubmit} buttons={
                 <Fragment>
                     <button type={'submit'} className={'form-button'}>提交</button>
                     <button className={'form-button'}>返回</button>
