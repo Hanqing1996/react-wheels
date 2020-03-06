@@ -15,9 +15,9 @@ interface formProps {
     fields: Array<{ name: string, label: string, input: { type: string } }>,
     buttons: ReactNode,
     onSubmit: React.FormEventHandler,
-    onChange: Function
-    errors?: FormErrors
-    errorsDisplay?:'first'|'all'
+    onChange: Function,
+    errors?: FormErrors,
+    errorsDisplay?:'first'|'all',
 }
 
 const Form: React.FunctionComponent<formProps> = (props) => {

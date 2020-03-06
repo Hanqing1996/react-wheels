@@ -16,22 +16,43 @@ const IconExample: React.FunctionComponent = () => {
         {name: 'username', label: '用户名', input: {type: 'text'}},
         {name: 'password', label: '密码', input: {type: 'text'}},
     ])
+
     const onSubmit = () => {
 
         const rules = [
             {key: 'username', required: true},
             {key: 'username', minLength: 6, maxLength: 8},
             {key: 'username', pattern: /^[A-Za-z0-9]+$/},
+            {
+                key: 'username', validator: {
+                    name: 'unique', newValidate: (data: string) => {
+                        return new Promise((resolve, reject) => {
+                            checkUserName(data, resolve, reject)
+                        })
+                    }
+                }
+            },
             {key: 'password', required: true}
         ]
 
-        const errors = validator(formData, rules)
+        const errors=validator(formData, rules)
         setErrors(errors)
 
         //axios.post('signIn',formData).then(success,fail)
     }
     const onChange = (newFormValue: FormValue) => {
         setFormData(newFormValue)
+    }
+
+    const userNames = ['jack1', 'jack2', 'jack3', 'jack4']
+    const checkUserName = (name: string, success: Function, fail: Function) => {
+        setTimeout(() => {
+            if (userNames.includes(name)) {
+                fail('用户名已存在')
+            } else {
+                success('')
+            }
+        }, 3000)
     }
 
     return (
