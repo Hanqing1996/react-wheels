@@ -18,20 +18,12 @@ export interface FormErrors {
     [key: string]: Promise<any> []
 }
 
+export interface ResultErrors {
+    [key: string]: (string|undefined) []
+}
+
 // 判断 value 是否存在
 const isEmpty = (value: any) => value === undefined || value === null || value === ''
-// // flat:拍平多维数组（二维->一维）
-// const flat=(array:Array<any>)=>{
-//     let result:Array<any>=[]
-//     array.forEach((item:any)=> {
-//         if (item instanceof Array) {
-//             result.push(...item)
-//         } else {
-//             result.push(item)
-//         }
-//     })
-//     return result
-// }
 
 const getPromise = (message: string) => {
     return new Promise((resolve, reject) => {
@@ -39,7 +31,7 @@ const getPromise = (message: string) => {
     })
 }
 
-export const validator = (data: FormValue, rules: FormRules,callback:(result:FormErrors)=>void):void => {
+export const validator = (data: FormValue, rules: FormRules,callback:(result:ResultErrors)=>void):void => {
     let errors: FormErrors = {}
 
     const addError = (key: string, verifyPromise: Promise<any>) => {
@@ -77,15 +69,14 @@ export const validator = (data: FormValue, rules: FormRules,callback:(result:For
 
     })
 
-    let temp: FormErrors = {}
+    let result: {[key:string]:(string|undefined) [] } = {}
     const sum: Number = Object.keys(errors).length
     Object.keys(errors).map((key, index) => {
-
-        temp[key] = []
-        Promise.all(errors[key]).then((info) => {
-            temp[key] = [...temp[key], ...info].filter(Boolean)
+        result[key]=[]
+        Promise.all(errors[key]).then((info:(string|undefined)[]) => {
+            result[key] = [...result[key], ...info].filter(Boolean)
             if (sum === (index + 1)) {
-                callback(temp)
+                callback(result)
             }
         })
     })

@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react'
 import Form, {FormValue} from "../../components/form/form";
 import {useState} from "react";
-import {validator,FormErrors} from '../../components/form/validator'
+import {validator,ResultErrors} from '../../components/form/validator'
 import './form.example.scss'
 
 const IconExample: React.FunctionComponent = () => {
@@ -44,7 +44,7 @@ const IconExample: React.FunctionComponent = () => {
             },
         ]
 
-        validator(formData, rules,(result:FormErrors)=>{
+        validator(formData, rules,(result:ResultErrors)=>{
             console.log('result');
             console.log(result);
             setErrors(result)
