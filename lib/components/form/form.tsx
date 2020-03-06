@@ -1,8 +1,9 @@
-import React, {FormEvent, ReactNode} from 'react'
+import React, {FormEvent, ReactNode, Fragment} from 'react'
 import {FormErrors} from "./validator";
 import Input from "../input/input";
 import './form.scss'
 import {scopedClassMaker} from '../../helpers/classes'
+
 const scopedClass = scopedClassMaker('wheel-form')
 
 export interface FormValue {
@@ -16,6 +17,7 @@ interface formProps {
     onSubmit: React.FormEventHandler,
     onChange: Function
     errors?: FormErrors
+    errorsDisplay?:'first'|'all'
 }
 
 const Form: React.FunctionComponent<formProps> = (props) => {
@@ -34,25 +36,43 @@ const Form: React.FunctionComponent<formProps> = (props) => {
 
     return (
         <form onSubmit={onFormSubmit} className={scopedClass('')}>
-            {
-                props.fields.map((field, index) =>
-                    <div key={index} >
-                        <div className={scopedClass('row')}>
-                        <label className={scopedClass('label')}>{field.label}</label>
-                        <Input className={scopedClass('input',)} type={field.name} value={formData[field.name]} onChange={(e) => {
-                            onInputChange(field.name, e.target.value)
-                        }}/>
-                        </div>
-                        <div className={'errorMessage'} style={{color:'red'}}>{props.errors ? props.errors[field.name] ? props.errors[field.name].map((error, index) =>
-                            <div key={index}>{error}</div>) : null : null}</div>
-                    </div>)
-            }
-            <div>
-                {props.buttons}
-            </div>
-
+            <table className={scopedClass('table')}>
+                <tbody>
+                {
+                    props.fields.map((field, index) =>
+                        <Fragment key={index}>
+                            <tr className={scopedClass('tr')}>
+                                <td className={scopedClass('td')}>
+                                    <label className={scopedClass('label')}>{field.label}</label>
+                                </td>
+                                <td>
+                                    <Input className={scopedClass('input',)} type={field.name}
+                                           value={formData[field.name]}
+                                           onChange={(e) => {
+                                               onInputChange(field.name, e.target.value)
+                                           }}/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <div className={scopedClass('errorMessage')}>{props.errors&& props.errors[field.name]&& (props.errorsDisplay==='first'?props.errors[field.name][0]:props.errors[field.name].join(' ')) }</div>
+                                </td>
+                            </tr>
+                        </Fragment>)
+                }
+                <tr>
+                    <td></td>
+                    <td>{props.buttons}</td>
+                </tr>
+                </tbody>
+            </table>
         </form>
     )
+}
+
+Form.defaultProps={
+    errorsDisplay:'first'
 }
 
 export default Form

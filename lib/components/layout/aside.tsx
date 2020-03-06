@@ -7,8 +7,9 @@ interface IProps extends React.HTMLAttributes<HTMLElement>{
 const scopedClass = scopedClassMaker('wheel-layout')
 
 const Aside: React.FunctionComponent<IProps> = (props) => {
+    const {className,...rest}=props
     return (
-        <div className={scopedClass('aside',props.className)}>{props.children}</div>
+        <div className={scopedClass('aside',className)} {...rest}>{props.children}</div>
     )
 }
 

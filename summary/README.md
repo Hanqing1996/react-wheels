@@ -486,7 +486,8 @@ const modal = (content: ReactNode | ReactFragment) => {
 }
 ```
 
-#### react 的组件默认不接受 style,
+> react 的组件默认不接受 style,ClassName, 除非继承 HTMLAttributes，这样 style,ClassName 可作为props 传递。继承来的 style/clsssName 实际被放置到组件顶层元素上
+> vue 的组件也默认不接受 style,ClassName。
 
 
 #### 受控组件和非受控组价
@@ -510,11 +511,48 @@ setInterval(()=>{
 },3000)
 <input type="text" defaultValue='libai' ref={refInput}/>
 ```
+ 
+> react 和 vue 都认为，props 的修改只能由父组件执行，vue 通过事件机制/sync 实现。react 通过回调函数与作用域原理实现。
 
 
+#### 避免出现 class 包括 wheel-button-undefined 
+* 出现原因:没有传递 level,但组件内部的渲染没有对此种情况做判断
+```
+// button.example.tsx
+<Button >按钮</Button>
+```
+```
+// button.tsx
+interface buttonProps extends  ButtonHTMLAttributes<HTMLButtonElement> {
+    level?:'important'|'danger'|'normal'
+}
 
-#### 
-react 和 vue 都认为，props 的修改只能由父组件执行，vue 通过事件机制/sync 实现。react 通过函数与作用域原理实现。
+const extraName=classes(scopedClass(`${level}`),className)
+return (
+       <button className={scopedClass(``,extraName)} {...rest}>{props.children}</button>
+)
+```
+解决方法1:加判断，只有传递了 level 的情况下才执行相应后续操作
+```
+// button.tsx
+interface buttonProps extends  ButtonHTMLAttributes<HTMLButtonElement> {
+    level?:'important'|'danger'|'normal'
+}
+const Button: React.FunctionComponent<buttonProps> = (props) => {
+    const {className,level,...rest}=props
+
+    const extraName=classes(props.level&& scopedClass(`${level}`),className)
+    return (
+            <button className={scopedClass(``,extraName)} {...rest}>{props.children}</button>
+    )
+}
+```
+解决方法2:设置默认 level,既保证 props.level 一定存在
+```
+
+```
+
+
 
 #### 各类 scss 文件
 * example.scss

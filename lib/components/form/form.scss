@@ -1,32 +1,13 @@
 .wheel-form{
   padding: 8px 0;
-  &-row{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 16px;
+  &-table{
   }
-  &-label{
-    width:3.5em;
-    text-align: justify;
-    height: 22px;
-    overflow: hidden;
-    &::after{
-      overflow: hidden;
-      height: 0px;
-      content:'';
-      display: inline-block;
-      width: 100%;
-    }
+  &-td{
+    padding-right: 4px;
   }
-
-  &-label + &-input{
-    margin-left: 4px;
-  }
-  &-row:first-child{
-    margin-top: 0;
-  }
-  &-row:last-child{
-    margin-bottom: 0;
+  &-errorMessage{
+    height: 24px;
+    line-height: 24px;
+    color: fade_out(red,0.3);
   }
 }

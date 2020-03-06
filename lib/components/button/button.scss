@@ -1,5 +1,11 @@
 @import '../../_helper.scss';
 
 .wheel-button{
-  @include button-style
+  @include button-style;
+  &-important{
+    background-color: red;
+  }
+  &-danger{
+    background-color: green;
+  }
 }
