@@ -1,8 +1,22 @@
-import React from 'react'
+import React, {HTMLAttributes} from 'react'
+import {scopedClassMaker} from "../../helpers/classes";
+import './scroll.scss'
 
-const Scroll: React.FunctionComponent = (props) => {
+interface ScrollProps extends HTMLAttributes<HTMLDivElement> {
+
+}
+
+const scrollClass = scopedClassMaker('wheel-scroll')
+const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
+
+    const {className, children, ...rest} = props
+
     return (
-        <div>{props.children}</div>
+        <div className={scrollClass('', className)} {...rest}>
+            <div className={scrollClass('inner')}>
+                {props.children}
+            </div>
+        </div>
     )
 }
 
