@@ -28,6 +28,7 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
 
         document.addEventListener('mouseup', onMouseUpBar)
         document.addEventListener('mousemove', onMouseMoveBar)
+        document.addEventListener('selectstart', onSelect)
 
         const contentHeight = refContent.current!.scrollHeight
         const trackHeight = refTrack.current!.getBoundingClientRect().height
@@ -41,6 +42,7 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
         return () => {
             document.removeEventListener('mouseup', onMouseUpBar)
             document.removeEventListener('mousemove', onMouseMoveBar)
+            document.removeEventListener('selectstart', onSelect)
         }
 
     }, [])
@@ -58,11 +60,16 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
 
     }, [barScrollTop])
 
+    const onSelect=(e:Event)=>{
+        if(draggingRef.current){
+            e.preventDefault()
+        }
+    }
+
     const onScrollContent: UIEventHandler = (e) => {
         setContentScrollTop(e.currentTarget.scrollTop)
     }
 
-    //
     const onMouseDownBar: MouseEventHandler<HTMLDivElement> = (e) => {
         draggingRef.current = true
         firstYRef.current = e.clientY
