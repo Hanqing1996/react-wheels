@@ -7,6 +7,20 @@
     left: 0;
     bottom: 0;
     overflow: auto;
-    border:1px solid blue;
+  }
+  &-track{
+    position: absolute;
+    top:0;
+    right: 0;
+    bottom: 0;
+    width: 10px;
+  }
+  &-bar{
+    height: 120px;
+    width: 80%;
+    background-color: fade_out(gray,0.5);
+    position: absolute;
+    right: 0;
+    border-radius: 4px;
   }
 }

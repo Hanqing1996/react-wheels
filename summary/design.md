@@ -49,5 +49,25 @@ errors={
 2. 比如对于 username,注册时"查询用户名是否已存在"就属于异步校验。这里要注意，必须等待所有异步校验完成后才能生成一个统一的 errors。否则同步的校验已经完成并渲染错误情况了，但是异步校验还没完成的尴尬。
 
 #### scroll
+* 基本思路
+1. 隐藏浏览器自带滚动条
+```
+overflow:hidden
+```
+2. 自制滚动条
+3. 动态计算滚动条下降高度 barScrollTop
+```
+// bar 可下降总高度=track高度-bar高度
+barScrollHeight= trackHeight-barHeight 
+/* content可下降总高度=content总高度-track高度
+ * rate=bar 可下降总高度/content可下降总高度
+ */   
+rate=barScrollHeight/(contentHeight-trackHeight)
+
+barScrollTop=rate*contentScrollTop
+```
+
+
+
 * height
 
