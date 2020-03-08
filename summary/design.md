@@ -66,8 +66,8 @@ rate=barScrollHeight/(contentHeight-trackHeight)
 
 barScrollTop=rate*contentScrollTop
 ```
-
-
+4. 令滚动条可拖拽
+5. 移动端隐藏滚动条
 
 * height
 

@@ -559,8 +559,21 @@ const Button: React.FunctionComponent<buttonProps> = (props) => {
 * collapse all
 > 折叠代码 
 
+#### TS
+```
+document.addEventListener('mousemove',onMouseMoveBar)
 
+const onMouseDownBar:MouseEventHandler<HTMLDivElement>=(e)=>{
+}
+```
+> 报错: Type '(event: MouseEvent<DocumentEvent, MouseEvent>) => void' is not assignable to type 'EventListener'.
 
+* 解决办法:只写参数类型
+```
+document.addEventListener('mousemove',onMouseMoveBar)
+const onMouseMoveBar=(e:MouseEvent)=>{
+}
+```
 
 #### 各类 scss 文件
 * example.scss
@@ -612,6 +625,7 @@ const Button: React.FunctionComponent<buttonProps> = (props) => {
     ```
     <Layout className={'user-layout1 user-layout2'}>
     ```
-  
+* Scroll
+    * useRef:如果希望某个变量（非 state）不随重新 render 而被重置，则应该使用 useRef  
   
   
