@@ -1,4 +1,6 @@
 import React, {HTMLAttributes} from 'react'
+import {scrollbarWidth} from './scrollbar-width'
+
 import {scopedClassMaker} from "../../helpers/classes";
 import './scroll.scss'
 
@@ -13,7 +15,7 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
 
     return (
         <div className={scrollClass('', className)} {...rest}>
-            <div className={scrollClass('inner')}>
+            <div className={scrollClass('inner')} style={{right:-scrollbarWidth()}}>
                 {props.children}
             </div>
         </div>
