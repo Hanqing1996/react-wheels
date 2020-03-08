@@ -8,10 +8,13 @@ interface ScrollProps extends HTMLAttributes<HTMLDivElement> {
 
 }
 
+const isTouchDevice = 'ontouchstart' in document.documentElement
+
 const scrollClass = scopedClassMaker('wheel-scroll')
 const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
     const [contentScrollTop, setContentScrollTop] = useState(0)
     const [barScrollTop, setBarScrollTop] = useState(0)
+    const [barVisible, setBarVisible] = useState(false)
 
     const rateRef = useRef<number>(1)
     const draggingRef = useRef<boolean>(false)
@@ -26,26 +29,37 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
     // mounted
     useEffect(() => {
 
-        document.addEventListener('mouseup', onMouseUpBar)
-        document.addEventListener('mousemove', onMouseMoveBar)
-        document.addEventListener('selectstart', onSelect)
-
-        const contentHeight = refContent.current!.scrollHeight
-        const trackHeight = refTrack.current!.getBoundingClientRect().height
-        const barHeight = refBar.current!.getBoundingClientRect().height
-        const barScrollHeight = trackHeight - barHeight
-        maxScrollTop.current = barScrollHeight
-
-        rateRef.current = barScrollHeight / (contentHeight! - trackHeight)
-
-        // beforeDestroyed
-        return () => {
-            document.removeEventListener('mouseup', onMouseUpBar)
-            document.removeEventListener('mousemove', onMouseMoveBar)
-            document.removeEventListener('selectstart', onSelect)
-        }
+        // 是触屏设备，则隐藏滚动条
+        setBarVisible(!isTouchDevice)
 
     }, [])
+
+    useEffect(() => {
+        if(barVisible){
+            document.addEventListener('mouseup', onMouseUpBar)
+            document.addEventListener('mousemove', onMouseMoveBar)
+            document.addEventListener('selectstart', onSelect)
+
+            const contentHeight = refContent.current!.scrollHeight
+            const trackHeight = refTrack.current!.getBoundingClientRect().height
+            const barHeight = refBar.current!.getBoundingClientRect().height
+            const barScrollHeight = trackHeight - barHeight
+            maxScrollTop.current = barScrollHeight
+
+            rateRef.current = barScrollHeight / (contentHeight! - trackHeight)
+
+            // beforeDestroyed
+            return () => {
+                document.removeEventListener('mouseup', onMouseUpBar)
+                document.removeEventListener('mousemove', onMouseMoveBar)
+                document.removeEventListener('selectstart', onSelect)
+            }
+        }else {
+            return
+        }
+
+    }, [barVisible])
+
 
     // 根据 content 下滑高度，动态计算 bar 下滑高度。
     useEffect(() => {
@@ -60,8 +74,8 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
 
     }, [barScrollTop])
 
-    const onSelect=(e:Event)=>{
-        if(draggingRef.current){
+    const onSelect = (e: Event) => {
+        if (draggingRef.current) {
             e.preventDefault()
         }
     }
@@ -79,8 +93,8 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
     const onMouseMoveBar = (e: MouseEvent) => {
         if (draggingRef.current) {
             const delta = e.clientY - firstYRef.current
-            const newBarScrollTop=firstBarTopRef.current + delta
-            if(newBarScrollTop<maxScrollTop.current&&newBarScrollTop>0){
+            const newBarScrollTop = firstBarTopRef.current + delta
+            if (newBarScrollTop < maxScrollTop.current && newBarScrollTop > 0) {
                 setBarScrollTop(newBarScrollTop)
             }
         }
@@ -98,11 +112,11 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
                  onScroll={onScrollContent}>
                 {props.children}
             </div>
-            <div ref={refTrack} className={scrollClass('track')}>
+            {barVisible ? <div ref={refTrack} className={scrollClass('track')}>
                 <div ref={refBar} className={scrollClass('bar')} style={{top: barScrollTop}}
                      onMouseDown={onMouseDownBar}>
                 </div>
-            </div>
+            </div> : null}
         </div>
     )
 }

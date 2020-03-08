@@ -577,7 +577,7 @@ const onMouseMoveBar=(e:MouseEvent)=>{
 
 
 #### [我们无法在 mousemove 的回调函数中获取到 barScrollTop](https://stackoverflow.com/questions/55126487/function-not-correctly-reading-updated-state-from-react-hook-state) 
-> 解决方法，用 useEffect,在 barScrollTop 已经 updated 的地方读取 barScrollTop
+
 
 #### 各类 scss 文件
 * example.scss

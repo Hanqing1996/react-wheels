@@ -7,6 +7,10 @@
     left: 0;
     bottom: 0;
     overflow: auto;
+    /*隐藏移动端原生滚动条*/
+    &::-webkit-scrollbar{
+      display: none;
+    }
   }
   &-track{
     position: absolute;
