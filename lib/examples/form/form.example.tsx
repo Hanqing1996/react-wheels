@@ -64,7 +64,7 @@ const IconExample: React.FunctionComponent = () => {
             } else {
                 success(undefined)
             }
-        }, 1000)
+        }, 5000)
     }
 
     return (

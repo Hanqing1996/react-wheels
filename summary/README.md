@@ -547,10 +547,18 @@ const Button: React.FunctionComponent<buttonProps> = (props) => {
     )
 }
 ```
-解决方法2:设置默认 level,既保证 props.level 一定存在
-```
+解决方法2:设置默认 level,即保证 props.level 一定存在
 
-```
+
+
+#### 阅读源码 webStorm 快捷键
+> 声明不看，赋值不看
+
+* back
+> 回到刚才看的地方
+* collapse all
+> 折叠代码 
+
 
 
 
