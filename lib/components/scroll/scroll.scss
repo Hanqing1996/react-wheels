@@ -1,6 +1,7 @@
 .wheel-scroll{
   position: relative;
   overflow: hidden;
+  border:1px solid red;
   &-inner {
     position: absolute;
     top:0;

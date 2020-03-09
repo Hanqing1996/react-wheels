@@ -583,12 +583,60 @@ const onMouseMoveBar=(e:MouseEvent)=>{
 
 
 #### useRef
-1. useRef 改变之后立即得到更新后的值;但 useSatate 不一定（useEffect,mousemove 回调函数内不行）
+1. useRef 改变之后立即得到更新后的值;但 useSatate 必须在重新 render 之后才能读到（useEffect,mousemove 回调函数内就读不到，但是 touchMove 内竟然能读到实时更新后的值我丢）
+2. 跨函数变量，应该用 useRef（因为 useRef 能保证在 A 中改变后，在 B 中立即读到更新后的值）
+```
+
+``` 
+3. 作为 DOM 相关属性，应该用 useState（因为 DOM 节点的更新必然经过重新render，useState 能满足）
+```
+const [barScrollTop,setBarScrollTop]=useState(0)
+```
+```
+<div style={{top: barScrollTop}}>
+</div>
+```
+
+#### 防抖（debounce）
+```
+const onScrollContent: UIEventHandler = (e) => {
+    setContentScrollTop(e.currentTarget.scrollTop)
+
+    // 不可拖拽，则只在 scroll 期间显示滚动条
+    if(!(props.a===1)){
+        console.log(1);
+        setBarVisible(true)
+        let timerId=window.setTimeout(()=>{
+            // 停止 scroll 三秒后，barVisible 变为 false
+            setBarVisible(false)
+            window.clearTimeout(timerId)
+        },3000)
+    }
+}
+```
+
+#### TS 
+```
+<div onTouchStart={MyTouchStart}></div>
+```
+```
+// 怎么知道 MyTouchMove 的类型?
+const MyTouchMove=()=>{
+}
+```
+解决方法:因为 MyTouchMove 是赋值给 onTouchStart 的，所以 ctrl 单机查看 onTouchStart 的类型即可
 
 
 #### 判断设备是不是触屏端
 ```
 const isTouchDevice = 'ontouchstart' in document.documentElement
+```
+
+#### 隐藏移动端原生滚动条
+```
+&::-webkit-scrollbar{
+  display: none;
+}
 ```
 
 #### 各类 scss 文件

@@ -1,20 +1,30 @@
-import React, {HTMLAttributes, MouseEventHandler, UIEventHandler, useEffect, useRef, useState} from 'react'
+import React, {
+    HTMLAttributes,
+    MouseEventHandler,
+    TouchEventHandler,
+    UIEventHandler,
+    useEffect,
+    useRef,
+    useState
+} from 'react'
 import {scrollbarWidth} from './scrollbar-width'
 
 import {scopedClassMaker} from "../../helpers/classes";
 import './scroll.scss'
 
 interface ScrollProps extends HTMLAttributes<HTMLDivElement> {
-    a:number
+    a: number
 }
 
 const scrollClass = scopedClassMaker('wheel-scroll')
 const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
 
+
+    const {className, children, a, ...rest} = props
+
     const [contentScrollTop, setContentScrollTop] = useState(0)
     const [barScrollTop, setBarScrollTop] = useState(0)
     const [barVisible, setBarVisible] = useState(false)
-
 
     const rateRef = useRef<number>(1)
     const draggingRef = useRef<boolean>(false)
@@ -26,14 +36,15 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
     const refTrack = useRef<HTMLDivElement>(null)
     const refBar = useRef<HTMLDivElement>(null)
 
+
     // mounted
     useEffect(() => {
 
-        setBarVisible(props.a===1)
+        setBarVisible(a === 1)
     }, [])
 
     useEffect(() => {
-        if(barVisible){
+        if (barVisible) {
             document.addEventListener('mouseup', onMouseUpBar)
             document.addEventListener('mousemove', onMouseMoveBar)
             document.addEventListener('selectstart', onSelect)
@@ -52,7 +63,7 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
                 document.removeEventListener('mousemove', onMouseMoveBar)
                 document.removeEventListener('selectstart', onSelect)
             }
-        }else {
+        } else {
             return
         }
 
@@ -79,18 +90,22 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
     }
 
     const onScrollContent: UIEventHandler = (e) => {
+
         setContentScrollTop(e.currentTarget.scrollTop)
 
         // 不可拖拽，则只在 scroll 期间显示滚动条
-        if(!(props.a===1)){
+        if (!(a === 1)) {
             setBarVisible(true)
-            window.setTimeout(()=>{
+            let timerId = window.setTimeout(() => {
+                // 停止 scroll 三秒后，barVisible 变为 false
                 setBarVisible(false)
-            },3000)
+                window.clearTimeout(timerId)
+            }, 3000)
         }
     }
 
     const onMouseDownBar: MouseEventHandler<HTMLDivElement> = (e) => {
+
         draggingRef.current = true
         firstYRef.current = e.clientY
         firstBarTopRef.current = barScrollTop
@@ -110,12 +125,40 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
         draggingRef.current = false
     }
 
-    const {className, children, ...rest} = props
+    const [translateY, setTranslateY] = useState(0)
+    const lastY = useRef(0)
+    const startFromTop=useRef(false)
+
+    const onTouchStart: TouchEventHandler = (e) => {
+        if(barScrollTop===0){
+            startFromTop.current=true
+        }
+    }
+    const onTouchMove: TouchEventHandler = (e) => {
+        const delta = e.touches[0].clientY - lastY.current
+        // 从顶端往下拉，证明用户向下拉更新
+        if(startFromTop&&delta>0){
+            console.log('translateY');
+            // 更新 translateY
+            setTranslateY(delta+translateY)
+        }
+        lastY.current=e.touches[0].clientY
+    }
+    const onTouchEnd: TouchEventHandler = (e) => {
+        // 用户松手，则重置 translateY 和 startFromTop
+        setTranslateY(0)
+        startFromTop.current=false
+    }
 
     return (
         <div className={scrollClass('', className)} {...rest}>
-            <div ref={refContent} className={scrollClass('inner')} style={{right: -scrollbarWidth()}}
-                 onScroll={onScrollContent}>
+            <div ref={refContent} className={scrollClass('inner')}
+                 style={{right: -scrollbarWidth(), transform: `translateY(${translateY}px)`}}
+                 onScroll={onScrollContent}
+                 onTouchStart={onTouchStart}
+                 onTouchMove={onTouchMove}
+                 onTouchEnd={onTouchEnd}
+            >
                 {props.children}
             </div>
             {barVisible ? <div ref={refTrack} className={scrollClass('track')}>
