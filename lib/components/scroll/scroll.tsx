@@ -5,10 +5,10 @@ import {scopedClassMaker} from "../../helpers/classes";
 import './scroll.scss'
 
 interface ScrollProps extends HTMLAttributes<HTMLDivElement> {
-
+    // draggable:boolean
 }
 
-const isTouchDevice = 'ontouchstart' in document.documentElement
+const draggable=true
 
 const scrollClass = scopedClassMaker('wheel-scroll')
 const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
@@ -30,7 +30,7 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
     useEffect(() => {
 
         // 是触屏设备，则隐藏滚动条
-        setBarVisible(!isTouchDevice)
+        setBarVisible(draggable)
 
     }, [])
 
