@@ -127,27 +127,57 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
 
     const [translateY, setTranslateY] = useState(0)
     const lastY = useRef(0)
-    const startFromTop=useRef(false)
+    const startFromTop = useRef(false)
+    const pulling = useRef(false)
 
     const onTouchStart: TouchEventHandler = (e) => {
-        if(barScrollTop===0){
-            startFromTop.current=true
+
+        // 如果是想下拉更新，必须保证以下条件
+        if (translateY === 0 && contentScrollTop === 0) {
+            console.log('你有下拉更新的资质，但是我得瞧瞧你拉的方向');
+            startFromTop.current = true
         }
+        lastY.current = e.touches[0].clientY
     }
     const onTouchMove: TouchEventHandler = (e) => {
-        const delta = e.touches[0].clientY - lastY.current
+        console.log(contentScrollTop);
+        let delta = e.touches[0].clientY - lastY.current
+
         // 从顶端往下拉，证明用户向下拉更新
-        if(startFromTop&&delta>0){
-            console.log('translateY');
+        if (startFromTop.current && delta > 0) {
             // 更新 translateY
-            setTranslateY(delta+translateY)
+            console.log('嗯，你可以下拉更新，拉吧');
+            if (delta + translateY < refContent.current!.scrollHeight * 0.3) {
+                setTranslateY(delta + translateY)
+                pulling.current = true
+            }
         }
-        lastY.current=e.touches[0].clientY
+
+        // 在下拉更新过程中，用户又往上拉了
+        if (pulling.current && delta < 0) {
+            console.log('你咋又往上拉了?');
+
+            // 不让用户上拉过度
+            if (delta + translateY > 0) {
+                console.log('别往上拉过头啊喂!');
+                setTranslateY(delta + translateY)
+            }
+        }
+
+        // 拉到内容顶端，可能下一步用户会下拉更新，因此将 startFromTop.current 置为 true
+        if (contentScrollTop === 0) {
+            console.log('你拉到内容顶端了,再往下拉就是下拉更新了')
+            startFromTop.current = true
+        }
+
+        lastY.current = e.touches[0].clientY
+        delta = 0
     }
     const onTouchEnd: TouchEventHandler = (e) => {
-        // 用户松手，则重置 translateY 和 startFromTop
+        // 用户松手，则重置 translateY,startFromTop,pulling.current
         setTranslateY(0)
-        startFromTop.current=false
+        startFromTop.current = false
+        pulling.current = false
     }
 
     return (
