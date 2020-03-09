@@ -1,4 +1,4 @@
-#### Dialog
+#### CitySelectorDialog
 * Alert
 > 警告消息框
 * Confirm

@@ -317,7 +317,7 @@ yarn add @types/react-router-dom
 * props.children 为可选字段，可能导致函数组件返回类型为 undefined
 > 解决方法：用 div 包裹 props.children
 ```
-const Dialog: React.FunctionComponent<dialogProps> = (props) => {
+const CitySelectorDialog: React.FunctionComponent<dialogProps> = (props) => {
     return (
         props.visible ?
             <div>
@@ -386,7 +386,7 @@ let eventHandler = (event) => {
 * 只要有一个部分需要 return XXX,则公共函数必须 return XXX
 ```
 const alert = (content: String) => {
-    // onClose 无法访问到 setX,所以无法直接切换 visible 状态，因此采用更新容器 div 内部组件的方式实现关闭 Dialog
+    // onClose 无法访问到 setX,所以无法直接切换 visible 状态，因此采用更新容器 div 内部组件的方式实现关闭 CitySelectorDialog
     const onClose = () => {
         // 容器 div 内部组件更新
         ReactDOM.render(React.cloneElement(component, {visible: false}), div)
@@ -395,10 +395,10 @@ const alert = (content: String) => {
         // 移除 div
         div.remove()
     }
-    // onClose 无法访问到 setX,所以无法直接切换 visible 状态，因此采用更新容器 div 内部组件的方式实现关闭 Dialog
-    const component = <Dialog visible={true} onClose={() => {
+    // onClose 无法访问到 setX,所以无法直接切换 visible 状态，因此采用更新容器 div 内部组件的方式实现关闭 CitySelectorDialog
+    const component = <CitySelectorDialog visible={true} onClose={() => {
         onClose()
-    }}>{content}</Dialog>
+    }}>{content}</CitySelectorDialog>
     const div = document.createElement('div')
     document.body.appendChild(div)
     ReactDOM.render(component, div)
@@ -419,11 +419,11 @@ const confirm = (content: String, yes?: Function, no?: Function) => {
         onClose()
         no && no()
     }
-    const component = <Dialog
+    const component = <CitySelectorDialog
         visible={true}
         onClose={onNo}
         buttons={[<button onClick={onYes}>yes</button>, <button onClick={onNo}>no</button>]}
-    >{content}</Dialog>
+    >{content}</CitySelectorDialog>
     const div = document.createElement('div')
     document.body.appendChild(div)
     ReactDOM.render(component, div)
@@ -436,7 +436,7 @@ const modal = (content: ReactNode | ReactFragment) => {
         ReactDOM.unmountComponentAtNode(div)
         div.remove()
     }
-    const component = <Dialog visible={true} onClose={onClose}>{content}</Dialog>
+    const component = <CitySelectorDialog visible={true} onClose={onClose}>{content}</CitySelectorDialog>
     const div = document.createElement('div')
     document.body.appendChild(div)
     ReactDOM.render(component, div)
@@ -451,11 +451,11 @@ const xxx = (content: ReactNode | ReactFragment, buttons?: Array<ReactElement>) 
         ReactDOM.unmountComponentAtNode(div)
         div.remove()
     }
-    // onClose 无法访问到 setX,所以无法直接切换 visible 状态，因此采用更新容器 div 内部组件的方式实现关闭 Dialog
-    const component = <Dialog
+    // onClose 无法访问到 setX,所以无法直接切换 visible 状态，因此采用更新容器 div 内部组件的方式实现关闭 CitySelectorDialog
+    const component = <CitySelectorDialog
         visible={true}
         onClose={onClose}
-        buttons={buttons}>{content}</Dialog>
+        buttons={buttons}>{content}</CitySelectorDialog>
     const div = document.createElement('div')
     document.body.appendChild(div)
     ReactDOM.render(component, div)
@@ -650,16 +650,16 @@ const isTouchDevice = 'ontouchstart' in document.documentElement
 > 供 layout.example.1tsx 引用
 
 #### 各个组件知识点
-* Dialog
+* CitySelectorDialog
     * 高阶函数 scopedClass:用于添加 class 前缀
     * Fragment:效果同 vue 的 template
     * 【重构】公共函数 makeDialog
     * 动态生成组件:ReactDOM.render
      ```
-      const component = <Dialog
+      const component = <CitySelectorDialog
           visible={true}
           onClose={onClose}
-          buttons={buttons}>{content}</Dialog>
+          buttons={buttons}>{content}</CitySelectorDialog>
       const div = document.createElement('div')
       document.body.appendChild(div)
       ReactDOM.render(component, div)

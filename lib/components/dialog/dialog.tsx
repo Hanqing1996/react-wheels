@@ -52,7 +52,7 @@ Dialog.defaultProps = {
 Dialog.displayName = 'Dialog'
 
 const makeDialog = (content: ReactNode | ReactFragment, buttons?: Array<ReactElement>) => {
-    // onClose 无法访问到 setX,所以无法直接切换 visible 状态，因此采用更新容器 div 内部组件的方式实现关闭 Dialog
+    // onClose 无法访问到 setX,所以无法直接切换 visible 状态，因此采用更新容器 div 内部组件的方式实现关闭 CitySelectorDialog
     const onClose = () => {
         // 容器 div 内部组件更新
         ReactDOM.render(React.cloneElement(component, {visible: false}), div)
@@ -61,7 +61,7 @@ const makeDialog = (content: ReactNode | ReactFragment, buttons?: Array<ReactEle
         // 移除 div
         div.remove()
     }
-    // onClose 无法访问到 setX,所以无法直接切换 visible 状态，因此采用更新容器 div 内部组件的方式实现关闭 Dialog
+    // onClose 无法访问到 setX,所以无法直接切换 visible 状态，因此采用更新容器 div 内部组件的方式实现关闭 CitySelectorDialog
     const component = <Dialog
         visible={true}
         onClose={onClose}
