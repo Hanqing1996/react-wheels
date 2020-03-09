@@ -14,6 +14,7 @@ import FormCode from '../code/form.code'
 import InputCode from '../code/input.code'
 import ButtonCode from '../code/button.code'
 import ScrollCode from '../code/scroll.code'
+import CitySelector from '../code/citySelector.code'
 
 import {scopedClassMaker} from "../helpers/classes";
 
@@ -66,6 +67,11 @@ ReactDOM.render(
                                 Scroll-滚动条
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink to="/citySelector">
+                                CitySelector-城市选择器
+                            </NavLink>
+                        </li>
                     </ul>
                 </Aside>
                 <Content className={scopedClass('content')}>
@@ -76,6 +82,7 @@ ReactDOM.render(
                     <Route path='/input' component={InputCode}/>
                     <Route path='/form' component={FormCode}/>
                     <Route path='/scroll' component={ScrollCode}/>
+                    <Route path='/citySelector' component={CitySelector}/>
                 </Content>
             </Layout>
             <Footer className={scopedClass('footer')}>&copy; zhq</Footer>
