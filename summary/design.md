@@ -57,13 +57,8 @@ overflow:hidden
 2. 自制滚动条
 3. 动态计算滚动条下降高度 barScrollTop
 ```
-// bar 可下降总高度=track高度-bar高度
-barScrollHeight= trackHeight-barHeight 
-/* content可下降总高度=content总高度-track高度
- * rate=bar 可下降总高度/content可下降总高度
- */   
+barScrollHeight= trackHeight-barHeight  
 rate=barScrollHeight/(contentHeight-trackHeight)
-
 barScrollTop=rate*contentScrollTop
 ```
 4. 令滚动条可拖拽
@@ -71,12 +66,8 @@ barScrollTop=rate*contentScrollTop
 7. 拖拽滚动条时，不选中文字
 
 * 移动端配适
-> touch 负责 scroll 和 下拉更新
+> touch 负责 scroll（touch 自动触发） 和下拉更新
 
-
-* 何时下拉更新
-1. 第一次下拉更新，必须满足 barScrollTop=0，且方向时是往下拉
-2. 第n(n>2)次下拉更新，必须满足 pulling=true，方向时是往下拉
 
 * height
 
