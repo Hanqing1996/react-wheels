@@ -5,16 +5,16 @@ import {scopedClassMaker} from "../../helpers/classes";
 import './scroll.scss'
 
 interface ScrollProps extends HTMLAttributes<HTMLDivElement> {
-    // draggable:boolean
+    a:number
 }
-
-const draggable=true
 
 const scrollClass = scopedClassMaker('wheel-scroll')
 const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
+
     const [contentScrollTop, setContentScrollTop] = useState(0)
     const [barScrollTop, setBarScrollTop] = useState(0)
     const [barVisible, setBarVisible] = useState(false)
+
 
     const rateRef = useRef<number>(1)
     const draggingRef = useRef<boolean>(false)
@@ -29,9 +29,7 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
     // mounted
     useEffect(() => {
 
-        // 是触屏设备，则隐藏滚动条
-        setBarVisible(draggable)
-
+        setBarVisible(props.a===1)
     }, [])
 
     useEffect(() => {
@@ -82,6 +80,14 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
 
     const onScrollContent: UIEventHandler = (e) => {
         setContentScrollTop(e.currentTarget.scrollTop)
+
+        // 不可拖拽，则只在 scroll 期间显示滚动条
+        if(!(props.a===1)){
+            setBarVisible(true)
+            window.setTimeout(()=>{
+                setBarVisible(false)
+            },3000)
+        }
     }
 
     const onMouseDownBar: MouseEventHandler<HTMLDivElement> = (e) => {

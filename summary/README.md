@@ -579,6 +579,18 @@ const onMouseMoveBar=(e:MouseEvent)=>{
 #### [我们无法在 mousemove 的回调函数中获取到 barScrollTop](https://stackoverflow.com/questions/55126487/function-not-correctly-reading-updated-state-from-react-hook-state) 
 
 
+#### [Warning: Received `false` for a non-boolean attribute. How do I pass a boolean for a custom boolean attribute?](https://stackoverflow.com/questions/49784294/warning-received-false-for-a-non-boolean-attribute-how-do-i-pass-a-boolean-f)
+
+
+#### useRef
+1. useRef 改变之后立即得到更新后的值;但 useSatate 不一定（useEffect,mousemove 回调函数内不行）
+
+
+#### 判断设备是不是触屏端
+```
+const isTouchDevice = 'ontouchstart' in document.documentElement
+```
+
 #### 各类 scss 文件
 * example.scss
 > 供 example.tsx 引用
