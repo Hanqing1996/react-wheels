@@ -1,14 +1,15 @@
-.wheel-citySelector{
-  &-dialog{
+.wheel-citySelector {
+  &-dialog {
+    overflow: auto;
     position: fixed;
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background-color: white;
-    &-header{
+    &-header {
       position: relative;
-      background-color:fade_in(yellow,0.5);
+      background-color: fade_in(yellow, 0.5);
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -16,13 +17,61 @@
       font-size: 20px;
       line-height: 50px;
     }
-    &-icon{
-      position:absolute;
-      top:0;
+    &-icon {
+      position: absolute;
+      top: 0;
       left: 0;
     }
-    &-currentCity{
+    &-currentCity {
       background-color: green
+    }
+    &-cityIndex {
+      border: 1px solid rgb(221,216,206);
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      > li {
+        color: orange;
+        width: 20%;
+        padding: 4px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    &-cityList{
+      border-right: 1px solid black;
+    }
+    &-citysBlock{
+      content: '';
+      display: block;
+      clear: both;
+      border-left: 1px solid rgb(237, 235, 229);
+    }
+    &-letter{
+      float:left;
+      width: 25%;
+      background-color: fade_out(gray,0.5);
+      line-height: 120px;
+      font-size: 30px;
+      text-align: center;
+      border: 1px solid rgb(237, 235, 229);
+      border-left: none;
+      border-bottom: none;
+    }
+    &-city{
+      float: left;
+      width: 25%;
+      font-size: 14px;
+      line-height: 60px;
+      text-align: center;
+      border: 1px solid rgb(237, 235, 229);
+      border-left: none;
+      margin-bottom: -1px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }

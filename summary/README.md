@@ -624,7 +624,7 @@ const onScrollContent: UIEventHandler = (e) => {
 const MyTouchMove=()=>{
 }
 ```
-解决方法:因为 MyTouchMove 是赋值给 onTouchStart 的，所以 ctrl 单机查看 onTouchStart 的类型即可
+解决方法:因为 MyTouchMove 是赋值给 onTouchStart 的，所以 ctrl 单击查看 onTouchStart 的类型即可
 
 
 #### 判断设备是不是触屏端
@@ -648,6 +648,16 @@ const isTouchDevice = 'ontouchstart' in document.documentElement
 > 存储 scss 变量
 * layout.example.scss
 > 供 layout.example.1tsx 引用
+
+#### TS 字母排序
+```
+* 如果是字母排序，在 TS 下应该用 charCodeAt
+```
+let arr=['c','a','b']
+
+console.log(arr.sort())
+```
+```
 
 #### 各个组件知识点
 * CitySelectorDialog
@@ -691,5 +701,7 @@ const isTouchDevice = 'ontouchstart' in document.documentElement
     ```
 * Scroll
     * useRef:如果希望某个变量（非 state）不随重新 render 而被重置，则应该使用 useRef  
+* CitySelector
+    * useContext    
   
   
