@@ -497,14 +497,14 @@ UI=f(state)
 * 受控组件
 > react 哲学：UI=f(state)。state 不变，则 UI 不变（说白了就是单向数据流，UI不可以自己变化，只能由 state 映射）
 ```
-// value 难写（onChange=>setName）易读（name）
+// value+onChange:管理整个过程
 const [name,setName]=useState('libai')
 <input type="text" value={name} onChange={(e)=>{setName(e.target.value)}}/>
 ```
 * 非受控组件
 > 不受 react 控制
 ```
-// value 易写（用户直接输入）难读（必须用 useRef）
+// defaultValue+ref:只管开始
 const refInput=useRef(null)
 setInterval(()=>{
     console.log(refInput&&refInput);
