@@ -495,7 +495,7 @@ const modal = (content: ReactNode | ReactFragment) => {
 UI=f(state)
 ```
 * 受控组件
-> react 哲学：UI=f(state)。state 不变，则 UI 不变
+> react 哲学：UI=f(state)。state 不变，则 UI 不变（说白了就是单向数据流，UI不可以自己变化，只能由 state 映射）
 ```
 // value 难写（onChange=>setName）易读（name）
 const [name,setName]=useState('libai')
