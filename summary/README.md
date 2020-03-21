@@ -597,24 +597,6 @@ const [barScrollTop,setBarScrollTop]=useState(0)
 </div>
 ```
 
-#### 防抖（debounce）
-```
-const onScrollContent: UIEventHandler = (e) => {
-    setContentScrollTop(e.currentTarget.scrollTop)
-
-    // 不可拖拽，则只在 scroll 期间显示滚动条
-    if(!(props.a===1)){
-        console.log(1);
-        setBarVisible(true)
-        let timerId=window.setTimeout(()=>{
-            // 停止 scroll 三秒后，barVisible 变为 false
-            setBarVisible(false)
-            window.clearTimeout(timerId)
-        },3000)
-    }
-}
-```
-
 #### TS 
 ```
 <div onTouchStart={MyTouchStart}></div>
