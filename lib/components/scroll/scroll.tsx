@@ -15,14 +15,14 @@ import './scroll.scss'
 interface ScrollProps extends HTMLAttributes<HTMLDivElement> {
     // 是否允许拖拽滚动条
     a: number
-    onPull?:()=>void
+    onPull?: () => void
 }
 
 const scrollClass = scopedClassMaker('wheel-scroll')
 const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
 
 
-    const {className, children, a, onPull,...rest} = props
+    const {className, children, a, onPull, ...rest} = props
 
     const [contentScrollTop, setContentScrollTop] = useState(0)
     const [barScrollTop, setBarScrollTop] = useState(0)
@@ -37,6 +37,8 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
     const refContent = useRef<HTMLDivElement>(null)
     const refTrack = useRef<HTMLDivElement>(null)
     const refBar = useRef<HTMLDivElement>(null)
+
+    const timerIdRef = useRef<number | null>(null);
 
 
     // mounted
@@ -98,10 +100,14 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
         // 不可拖拽，则只在 scroll 期间显示滚动条
         if (!(a === 1)) {
             setBarVisible(true)
-            let timerId = window.setTimeout(() => {
+
+            if (timerIdRef.current !== null) {
+                window.clearTimeout(timerIdRef.current)
+            }
+
+            timerIdRef.current = window.setTimeout(() => {
                 // 停止 scroll 三秒后，barVisible 变为 false
                 setBarVisible(false)
-                window.clearTimeout(timerId)
             }, 3000)
         }
     }
@@ -177,8 +183,8 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
     const onTouchEnd: TouchEventHandler = (e) => {
 
 
-        if(pulling.current){
-            onPull&&onPull()
+        if (pulling.current) {
+            onPull && onPull()
             console.log('下拉更新结束，此时用户应该看到更新后的内容')
         }
 
@@ -204,9 +210,9 @@ const Scroll: React.FunctionComponent<ScrollProps> = (props) => {
                 </div>
             </div> : null}
             {
-                pulling.current?<div className={scrollClass('pulling')} style={{height:translateY}}>
-                <span>请求数据中。。。</span>
-                </div>:null
+                pulling.current ? <div className={scrollClass('pulling')} style={{height: translateY}}>
+                    <span>请求数据中。。。</span>
+                </div> : null
             }
 
         </div>
